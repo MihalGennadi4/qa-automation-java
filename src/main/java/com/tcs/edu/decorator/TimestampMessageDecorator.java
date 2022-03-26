@@ -11,9 +11,9 @@ public class TimestampMessageDecorator {
      * @param message сообщение принимаемое на вход
      * @author m.petrukhin
      */
-    public static void decorate(String message) {
-        Instant instantTime = Instant.now();
-        System.out.println(instantTime + " " + message);
+    public static String decorate(String message) {
+        var addTime = Instant.now() + " " + message;
+        return addTime;
     }
 
 
