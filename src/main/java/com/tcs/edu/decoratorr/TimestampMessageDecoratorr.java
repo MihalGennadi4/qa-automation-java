@@ -1,11 +1,11 @@
-package com.tcs.edu.decorator;
+package com.tcs.edu.decoratorr;
 
 import java.time.Instant;
 
 /** Класс для изменениий принятых на вход сообщений.
  *
  */
-public class TimestampMessageDecorator {
+public class TimestampMessageDecoratorr {
 
     /** Метод добавляющий текущее время перед выводом сообщения принятого на вход.
      * @param message сообщение принимаемое на вход.

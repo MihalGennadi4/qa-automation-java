@@ -1,12 +1,12 @@
 package com.tcs.edu;
 
-import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.decoratorr.TimestampMessageDecoratorr;
+import com.tcs.edu.printerr.ConsolePrinterr;
 /** Основа приложения
  *  В нём творим различную учебную дичь.
  *
  */
-class Application {
+class Applicationn {
 
     /** Основная функция приложения.
      *  Существует для вополщения различных фантазий.
@@ -16,6 +16,6 @@ class Application {
      */
     public static void main(String[] args) {
 
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinterr.print(TimestampMessageDecoratorr.decorate("Hello World!"));
     }
 }
