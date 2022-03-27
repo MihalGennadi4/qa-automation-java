@@ -7,8 +7,8 @@ import java.time.Instant;
  */
 public class TimestampMessageDecorator {
 
-    /** Метод добавляющий текущее время перед выводом сообщения принятого на вход
-     * @param message сообщение принимаемое на вход
+    /** Метод добавляющий текущее время перед выводом сообщения принятого на вход.
+     * @param message сообщение принимаемое на вход.
      * @author m.petrukhin
      */
     public static String decorate(String message) {
