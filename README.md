@@ -92,7 +92,7 @@ Java com.tcs.edu.Application Building <sup>1 вебинар, 1 неделя</sup
   └── main
       └── java
           ├── com.tcs.edu.Application.java
-          └── com.tcs.edu.printer.ConsolePrinterr.java
+          └── com.tcs.edu.printer.ConsolePrinter.java
 ```
 - [ ] Build lifecycles: 3
 - [ ] Lifecycle phases

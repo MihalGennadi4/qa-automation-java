@@ -6,7 +6,7 @@ import com.tcs.edu.decorator.TimestampMessageDecorator;
  * Включает в себя методы связанные с выводом сообщений в консоль.
  *
  */
-public class ConsolePrinterr {
+public class ConsolePrinter {
 
     /** Метод print
      * Предназначен для вывода сообщений в консоль.

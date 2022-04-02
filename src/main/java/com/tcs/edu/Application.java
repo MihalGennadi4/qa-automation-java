@@ -1,7 +1,7 @@
 package com.tcs.edu;
 
 import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.printer.ConsolePrinterr;
+import com.tcs.edu.printer.ConsolePrinter;
 
 /**
  * Основа приложения
@@ -18,9 +18,9 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        ConsolePrinterr.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinterr.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinterr.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.messageCount + TimestampMessageDecorator.decorate("Hello World!"));
 
     }
 }
