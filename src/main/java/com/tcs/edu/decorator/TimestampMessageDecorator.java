@@ -12,8 +12,8 @@ public class TimestampMessageDecorator {
      * @author m.petrukhin
      */
     public static String decorate(String message) {
-        var addTime = Instant.now() + " " + message;
-        return addTime;
+        String decoratedMessage = Instant.now() + " " + message;
+        return decoratedMessage;
     }
 
 
