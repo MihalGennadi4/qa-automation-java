@@ -99,7 +99,7 @@ mvn clean verify
 ```
 - [ ] Выполните запуск приложения из текущей папки labguide
 ```shell
- java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Applicationn
+ java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Application
 ```
 
 
@@ -124,11 +124,11 @@ Hello world!
 
 Цели
 ----
-- [ ] Описан контракт класса com.tcs.edu.printerr.ConsolePrinterr в javadoc-комментариях
+- [ ] Описан контракт класса com.tcs.edu.printer.ConsolePrinterr в javadoc-комментариях
 
 Задачи
 ------
-- [ ] В IDEA откройте com.tcs.edu.printerr.ConsolePrinterr
+- [ ] В IDEA откройте com.tcs.edu.printer.ConsolePrinterr
 - [ ] Добавьте javadoc-комментарий, описывающий 
 - назначение класса
 - назначение метода
@@ -138,8 +138,8 @@ Hello world!
 
 Как проверить
 -------------
-- [ ] В IDEA откройте класс com.tcs.edu.Applicationn
-- [ ] Найдите использование класса com.tcs.edu.printerr.ConsolePrinterr
+- [ ] В IDEA откройте класс com.tcs.edu.Application
+- [ ] Найдите использование класса com.tcs.edu.printer.ConsolePrinterr
 - [ ] Активируйте функцию Quick Documentation
 
 Отправка на ревью
@@ -165,18 +165,18 @@ Hello world!
 
 Задачи
 ------
-- [ ] Добавить для класса `com.tcs.edu.Applicationn` директиву `package com.tcs.edu`
-- [ ] Добавить для класса `com.tcs.edu.printerr.ConsolePrinterr` директиву `package com.tcs.edu.printerr`
-- [ ] В классе `com.tcs.edu.Applicationn` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printerr.com.tcs.edu.printerr.ConsolePrinterr`
+- [ ] Добавить для класса `com.tcs.edu.Application` директиву `package com.tcs.edu`
+- [ ] Добавить для класса `com.tcs.edu.printer.ConsolePrinterr` директиву `package com.tcs.edu.printer`
+- [ ] В классе `com.tcs.edu.Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printer.com.tcs.edu.printer.ConsolePrinterr`
 - [ ] Выполните из консоли запуск приложения
 ```shell
- java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.com.tcs.edu.Applicationn
+ java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.com.tcs.edu.Application
 ```
 
 Как проверить
 -------------
 - [ ] Приложение успешно компилируется
-- [ ] При запуске класса `com.tcs.edu.Applicationn` видим вывод в консоль
+- [ ] При запуске класса `com.tcs.edu.Application` видим вывод в консоль
 ```shell
 Hello World!
 ```
@@ -207,8 +207,8 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) cоздайте пакет com.tcs.edu.decoratorr
-- [ ] Создайте класс com.tcs.edu.decoratorr.TimestampMessageDecoratorr
+- [ ] В sourcepath (src/main/java) cоздайте пакет com.tcs.edu.decorator
+- [ ] Создайте класс com.tcs.edu.decorator.TimestampMessageDecorator
 - [ ] Создайте статический метод decorate(String message), возвращающий String – обогащенную строку сообщения
 - [ ] В методе возвращайте склееную строку, состоящую из результата функции Instant.now() и входного параметра метода – строки сообщения
 - [ ] Импортируйте полное имя класса java.time.Instant 
@@ -245,7 +245,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класса com.tcs.edu.decoratorr.TimestampMessageDecoratorr
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класса com.tcs.edu.decorator.TimestampMessageDecorator
 - [ ] Результат выражения склейки текущего времени и сообщения сохраняйте в переменную decoratedMessage типа String
 - [ ] Возвращайте из метода значение этой переменной
 
@@ -278,7 +278,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте класс com.tcs.edu.decoratorr.TimestampMessageDecoratorr
+- [ ] В sourcepath (src/main/java) откройте класс com.tcs.edu.decorator.TimestampMessageDecorator
 - [ ] Добавьте глобальную (static) переменную messageCount
 - [ ] В методе вывода увеличивайте этот счетчик (оператор '++')
 - [ ] При формировании итоговой строки обогащенного сообщения вначале добавляйте значение этого счетчика
@@ -287,7 +287,7 @@ Hello World!
 -------------
 - [ ] Для проверки корректности работы программы с состоянием необходимо воспроизвести необходимое состояние
 - Единичного вывода теперь недостаточно
-- Измените тестовый класс com.tcs.edu.Applicationn, чтобы было более одного вывода сообщения
+- Измените тестовый класс com.tcs.edu.Application, чтобы было более одного вывода сообщения
 - [ ] Убедитесь в корректности вывода счетчика
 ```shell
 1 2022-03-04T05:29:23.020171Z Hello world!
@@ -318,7 +318,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decoratorr.TimestampMessageDecoratorr
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decorator.TimestampMessageDecorator
 - [ ] Измените объявление поясняющей переменной decoratedMessage: вместо явного объявления типа переменной используйте var
 
 Как проверить
@@ -347,7 +347,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decoratorr.TimestampMessageDecoratorr
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decorator.TimestampMessageDecorator
 - [ ] Измените объявление поясняющей переменной decoratedMessage: добавьте модификатор final
 
 Как проверить

@@ -1,4 +1,4 @@
-package com.tcs.edu.printerr;
+package com.tcs.edu.printer;
 
 public class ConsolePrinter {
     public static void print(String message) {

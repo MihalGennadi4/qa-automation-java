@@ -1,4 +1,4 @@
-package com.tcs.edu.printerr;
+package com.tcs.edu.printer;
 
 /** Класс com.tcs.edu.printer.ConsolePrinter
  * Включает в себя методы связанные с выводом сообщений в консоль.
