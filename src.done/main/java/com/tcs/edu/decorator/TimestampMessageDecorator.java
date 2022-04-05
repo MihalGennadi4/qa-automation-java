@@ -1,4 +1,4 @@
-package com.tcs.edu.decoratorr;
+package com.tcs.edu.decorator;
 
 import java.time.Instant;
 
