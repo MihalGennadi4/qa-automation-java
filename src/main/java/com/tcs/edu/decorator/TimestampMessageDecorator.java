@@ -9,7 +9,7 @@ public class TimestampMessageDecorator {
     /**
      * Перменная с кол-вом вызовов метода print
      */
-    public static int messageCount = 1; //todo переделать счетчик
+    public static int messageCount = 1;
 
     /**
      * Метод добавляющий текущее время перед выводом сообщения принятого на вход.
@@ -18,7 +18,7 @@ public class TimestampMessageDecorator {
      * @author m.petrukhin
      */
     public static String decorate(String message) {
-        final var decoratedMessage = " " + Instant.now() + " " + message;
+        final var decoratedMessage = String.format("%s %s", Instant.now(), message);
         return decoratedMessage;
     }
 
