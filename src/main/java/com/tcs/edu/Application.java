@@ -18,9 +18,12 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        ConsolePrinter.print(String.format("%d %s", TimestampMessageDecorator.messageCount +1, TimestampMessageDecorator.decorate("Hello World!")));
-        ConsolePrinter.print(String.format("%d %s", TimestampMessageDecorator.messageCount +1, TimestampMessageDecorator.decorate("Hello World!")));
-        ConsolePrinter.print(String.format("%d %s", TimestampMessageDecorator.messageCount +1, TimestampMessageDecorator.decorate("Hello World!")));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
+        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
 
 
     }
