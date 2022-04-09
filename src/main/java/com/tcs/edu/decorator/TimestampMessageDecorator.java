@@ -9,7 +9,7 @@ public class TimestampMessageDecorator {
     /**
      * Перменная с кол-вом вызовов метода print
      */
-    public static int messageCount = 1;
+    public static int messageCount = 0;
 
     /**
      * Метод добавляющий текущее время перед выводом сообщения принятого на вход.
