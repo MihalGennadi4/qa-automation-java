@@ -2,24 +2,38 @@ package com.tcs.edu.decorator;
 
 import java.time.Instant;
 
-/** Класс для изменениий принятых на вход сообщений.
- *
+/**
+ * Класс для изменениий принятых на вход сообщений.
  */
-public class TimestampMessageDecorator {
-    /** Перменная с кол-вом вызовов метода print
-     *
-     */
-    public static int messageCount = 1; //Хотел чтоб по умолчанию было 0, но не получилось сделать правильный вывод в консоль
 
-    /** Метод добавляющий текущее время перед выводом сообщения принятого на вход.
+public class TimestampMessageDecorator {
+    /**
+     * Перменная-счетчик с кол-вом вызовов метода decorate.
+     */
+    public static int messageCount = 0;
+
+    /**
+     * Размер "страницы".
+     */
+    public static final int PAGE_SIZE = 2;
+
+    /**
+     * Метод декорации сообщений.
+     * Добавляет текущее время перед выводом сообщения принятого на вход, счетчик вызоваа и разделение по "страницам"
+     * Счётчик считает и выводит кол-во обращений к методу decorate.
      * @param message сообщение принимаемое на вход.
      * @author m.petrukhin
      */
     public static String decorate(String message) {
-       final var decoratedMessage =" " + Instant.now() + " " + message;
+        messageCount++;
+        String decoratedMessage;
+        if (messageCount != 0 && messageCount % PAGE_SIZE == 0) {
+            decoratedMessage = String.format("%d %s %s \n---", messageCount, Instant.now(), message);
+        } else {
+            decoratedMessage = String.format("%d %s %s", messageCount, Instant.now(), message);
+        }
         return decoratedMessage;
     }
-
 
 
 }
