@@ -1,10 +1,8 @@
 package com.tcs.edu;
 
 import com.tcs.edu.decorator.Severity;
-import com.tcs.edu.service.MessageService;
-import com.tcs.edu.printer.ConsolePrinter;
+import static com.tcs.edu.printer.ConsolePrinter.print;
 
-import static com.tcs.edu.service.MessageService.processMessage;
 
 /**
  * Основа приложения
@@ -21,11 +19,6 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        ConsolePrinter.print("Hello World!", Severity.MINOR);
-        ConsolePrinter.print("Hello World!", Severity.REGULAR);
-        ConsolePrinter.print("Hello World!", Severity.MAJOR);
-        ConsolePrinter.print("Hello World!", Severity.REGULAR);
-        ConsolePrinter.print("Hello World!", Severity.MAJOR);
-        ConsolePrinter.print("Hello World!", Severity.MINOR);
+        print(Severity.MAJOR, "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!");
     }
 }
