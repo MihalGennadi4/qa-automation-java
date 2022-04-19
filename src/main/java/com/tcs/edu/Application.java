@@ -1,7 +1,8 @@
 package com.tcs.edu;
 
-import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.decorator.Severity;
+import static com.tcs.edu.printer.ConsolePrinter.print;
+
 
 /**
  * Основа приложения
@@ -18,13 +19,6 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello World!"));
-
-
+        print(Severity.MAJOR, "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!");
     }
 }
