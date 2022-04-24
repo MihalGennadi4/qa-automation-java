@@ -3,6 +3,8 @@ package com.tcs.edu;
 import com.tcs.edu.decorator.Severity;
 import static com.tcs.edu.decorator.Severity.MAJOR;
 import static com.tcs.edu.printer.ConsolePrinter.print;
+import static com.tcs.edu.service.MessageOrder.ASC;
+import static com.tcs.edu.service.MessageOrder.DESC;
 
 
 /**
@@ -20,7 +22,6 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        String example = null;
-        print(MAJOR, example, "Hello World!", "Hello World!", example , "Hello World!", "Hello World!");
+        print(MAJOR, DESC, "Первый", "Второй", "Третий", "Четвертый" , "Пятый", "Шестой");
     }
 }
