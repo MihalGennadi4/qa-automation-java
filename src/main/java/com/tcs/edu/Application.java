@@ -1,6 +1,7 @@
 package com.tcs.edu;
 
 import com.tcs.edu.decorator.Severity;
+import static com.tcs.edu.decorator.Severity.MAJOR;
 import static com.tcs.edu.printer.ConsolePrinter.print;
 
 
@@ -19,6 +20,7 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        print(Severity.MAJOR, "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!", "Hello World!");
+        String example = null;
+        print(MAJOR, example, "Hello World!", "Hello World!", example , "Hello World!", "Hello World!");
     }
 }

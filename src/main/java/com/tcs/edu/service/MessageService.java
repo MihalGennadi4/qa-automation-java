@@ -29,11 +29,16 @@ public class MessageService {
 
         messageCounter();
         String resault;
-        if (0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
+        if (message != null && 0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
             resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(level));
-        } else {
+        } else if (message != null) {
             resault = String.format("%d %s %s", showMessageCount(), addTimestamp(message), severityDecorate(level));
+        } else if (showMessageCount() % Counter.PAGE_SIZE == 0) {
+            resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(""), severityDecorate(level));
+        } else {
+            resault = String.format("%d %s %s", showMessageCount(), addTimestamp(""), severityDecorate(level));
         }
+
         return resault;
     }
 }
