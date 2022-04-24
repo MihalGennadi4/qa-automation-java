@@ -3,8 +3,10 @@ package com.tcs.edu;
 import com.tcs.edu.decorator.Severity;
 import static com.tcs.edu.decorator.Severity.MAJOR;
 import static com.tcs.edu.printer.ConsolePrinter.print;
+import static com.tcs.edu.service.Doubling.DOUBLES;
 import static com.tcs.edu.service.MessageOrder.ASC;
 import static com.tcs.edu.service.MessageOrder.DESC;
+import static com.tcs.edu.service.Doubling.DISTINCT;
 
 
 /**
@@ -22,6 +24,6 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        print(MAJOR, DESC, "Первый", "Второй", "Третий", "Четвертый" , "Пятый", "Шестой");
+        print(MAJOR, DISTINCT, "Первый", "Первый", "Второй", "Второй" , "Первый", "Шестой");
     }
 }
