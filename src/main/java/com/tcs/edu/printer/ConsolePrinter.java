@@ -34,10 +34,10 @@ public class ConsolePrinter {
     }
 
     /**
-     * Ptint с возможностью изменения порядка вывода сообщений
+     * Ptint с возможностью изменения порядка вывода сообщений.
      *
-     * @param level    уровень сообщения
-     * @param orderBy  определяет возрастающий или убывающий порядок вывода
+     * @param level    уровень сообщения.
+     * @param orderBy  определяет возрастающий или убывающий порядок вывода.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
     public static void print(Severity level, MessageOrder orderBy, String... messages) {
@@ -52,28 +52,49 @@ public class ConsolePrinter {
         }
     }
 
-    public static void print(Severity level, Doubling doubling, String... messages) {
-        //Проверку сообщения на вхождение в массив выведенных сообщений реализовать циклом с проверкой на эквивалентность
 
+    /**
+     * Print с возможностью убрать дубли из печати.
+     *
+     * @param level    уровень сообщения.
+     * @param doubling DISTINCT - убрать дубли, DOUBLES - оставить дубли.
+     * @param messages сообщение (или несколько) для вывода в консоль.
+     */
+    public static void print(Severity level, Doubling doubling, String... messages) {
         if (doubling == DOUBLES) {
             for (String current : messages) {
                 System.out.println(processMessage(level, current));
             }
         } else if (doubling == DISTINCT) {
-            String[] printedMessages = new String[messages.length];
-
-
-            for (int counter = 0; counter < messages.length; counter++) {
-                if (!Objects.equals(messages[counter], printedMessages)) {
-                    printedMessages[counter] = messages[counter];
-                    System.out.println(processMessage(level,messages[counter]));
+            String[] output = new String[messages.length];
+            boolean found = false;
+            int order = 0;
+            for (int count = 0; count < messages.length; count++) {
+                String searchedValue = messages[order];
+                for (String x : output) {
+                    if (Objects.equals(x, searchedValue)) {
+                        found = true;
+                        order++;
+                        break;
+                    } else if (!Objects.equals(x, searchedValue)) {
+                        found = false;
+                    }
+                }
+                if (found == false) {
+                    output[count] = messages[count];
+                    order++;
                 }
             }
+            for (String print : output) {
+                System.out.println(processMessage(level, print));
+            }
         }
-
-
     }
 }
+
+
+
+
 
 
 

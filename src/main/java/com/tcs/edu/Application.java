@@ -24,6 +24,6 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        print(MAJOR, DISTINCT, "Первый", "Первый", "Второй", "Второй" , "Первый", "Шестой");
+        print(MAJOR, DISTINCT, "Первый", "Второй", "Второй", "Четвертый" , "Первый", "Шестой","Седьмой");
     }
 }
