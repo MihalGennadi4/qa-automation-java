@@ -1,7 +1,8 @@
 package com.tcs.edu.printer;
 
 
-import com.tcs.edu.decorator.Severity;
+import com.tcs.edu.decorator.SeverityLevel;
+import com.tcs.edu.domain.Message;
 import com.tcs.edu.service.Doubling;
 import com.tcs.edu.service.MessageOrder;
 
@@ -27,10 +28,10 @@ public class ConsolePrinter {
      * @param level    уровень сообщения.
      * @author m.petrukhin
      */
-    public static void print(Severity level, String... messages) {
-        for (String current : messages) {
-            System.out.println(processMessage(level, current));
-        }
+    public static void print(Message message) {
+        //for (Message current : messages) {
+            System.out.println(processMessage(message));
+       // }
     }
 
     /**
@@ -40,7 +41,7 @@ public class ConsolePrinter {
      * @param orderBy  определяет возрастающий или убывающий порядок вывода.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public static void print(Severity level, MessageOrder orderBy, String... messages) {
+    public static void print(SeverityLevel level, MessageOrder orderBy, String... messages) {
         if (orderBy == ASC) {
             for (String current : messages) {
                 System.out.println(processMessage(level, current));
@@ -60,10 +61,10 @@ public class ConsolePrinter {
      * @param doubling DISTINCT - убрать дубли, DOUBLES - оставить дубли.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public static void print(Severity level, Doubling doubling, String... messages) {
+    public static void print(Doubling doubling, Message... messages) {
         if (doubling == DOUBLES) {
-            for (String current : messages) {
-                System.out.println(processMessage(level, current));
+            for (Message current : messages) {
+                System.out.println(processMessage(current));
             }
         } else if (doubling == DISTINCT) {
             String[] output = new String[messages.length];
