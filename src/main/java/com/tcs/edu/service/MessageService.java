@@ -3,6 +3,8 @@ package com.tcs.edu.service;
 import com.tcs.edu.counter.Counter;
 import com.tcs.edu.decorator.Severity;
 
+import java.util.Objects;
+
 import static com.tcs.edu.counter.Counter.messageCounter;
 import static com.tcs.edu.counter.Counter.showMessageCount;
 import static com.tcs.edu.decorator.SeverityMessageDecorator.severityDecorate;
@@ -29,11 +31,17 @@ public class MessageService {
 
         messageCounter();
         String resault;
-        if (0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
+        if (message != null && 0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
             resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(level));
-        } else {
+        } else if (message != null) {
             resault = String.format("%d %s %s", showMessageCount(), addTimestamp(message), severityDecorate(level));
+        } else if (showMessageCount() % Counter.PAGE_SIZE == 0) {
+            resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(""), severityDecorate(level));
+        } else {
+            resault = String.format("%d %s %s", showMessageCount(), addTimestamp(""), severityDecorate(level));
         }
+
         return resault;
     }
+
 }
