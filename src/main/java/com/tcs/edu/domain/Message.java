@@ -3,8 +3,8 @@ package com.tcs.edu.domain;
 import com.tcs.edu.decorator.SeverityLevel;
 
 public class Message {
-    private final SeverityLevel level;
-    private final String body;
+    private SeverityLevel level;
+    private String body;
 
     public Message(SeverityLevel level, String body) {
         this.level = level;
@@ -19,5 +19,12 @@ public class Message {
         return body;
     }
 
+    public void setLevel(SeverityLevel level) {
+        this.level = level;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 
 }

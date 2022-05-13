@@ -21,7 +21,7 @@ public class TimestampMessageDecorator {
     public static String addTimestamp(Message message) {
 
         String decoratedMessage;
-        if (message.getBody() != null){
+        if (message != null){
         decoratedMessage = String.format("%s %s", Instant.now(), message.getBody());
         } else decoratedMessage = String.format("%s", Instant.now());
         return decoratedMessage;

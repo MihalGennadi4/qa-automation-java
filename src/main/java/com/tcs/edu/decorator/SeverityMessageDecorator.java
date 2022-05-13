@@ -10,23 +10,27 @@ public class SeverityMessageDecorator {
      * MINOR - маловажные события
      * REGULAR - обычные
      * MAJOR - важные
+     *
      * @author m.petrukhin
      */
     public static String severityDecorate(Message message) {
         String severityString = null;
-        switch (message.getLevel()) {
-            case MINOR:
-                severityString = "()";
-                break;
-            case REGULAR:
-                severityString = "(!)";
-                break;
-            case MAJOR:
-                severityString = "(!!!)";
-                break;
-            default:
-                severityString = "";
-        }
+            switch (message.getLevel()) {
+                case MINOR:
+                    severityString = "()";
+                    break;
+                case REGULAR:
+                    severityString = "(!)";
+                    break;
+                case MAJOR:
+                    severityString = "(!!!)";
+                    break;
+                default:
+                    severityString = "";
+            }
+
         return severityString;
     }
 }
+
+
