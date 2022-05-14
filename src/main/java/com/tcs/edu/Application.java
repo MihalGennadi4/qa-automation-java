@@ -25,15 +25,15 @@ class Application {
      */
     public static void main(String[] args) {
 
-        Message message1 = new Message(MAJOR,"One");
+        Message message1 = new Message(MAJOR, "One");
         Message message2 = new Message(MAJOR, "Two");
-        Message message3 = new Message(MAJOR,"Two");
-        Message message4 = new Message(MINOR,"Four");
-        Message message5 = new Message(MINOR,"Five");
-        Message message6 = new Message(MAJOR,"One");
+        Message message3 = new Message(MAJOR, "Two");
+        Message message4 = new Message(MINOR, "Four");
+        Message message5 = new Message(MINOR, "Five");
+        Message message6 = new Message(MAJOR, "One");
         MessageService.log(message1, message2, message3, message4, message5, message6);
         MessageService.log(DESC, message1, message2, message3, message4, message5, message6);
-        MessageService.log(DISTINCT, message1, message2, message3, message4, message5, message6);
+        MessageService.log(DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
 
     }
 }

@@ -24,13 +24,13 @@ public class MessageService {
      *
      * @author m.petrukhin
      */
-    public static String processMessage(Message message) { //todo надо фиксить NPE и не печатать null
+    public static String processMessage(Message message) {
 
         messageCounter();
         String resault;
         if (message != null && 0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
             resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(message));
-        } else if (message != null ) {
+        } else if (message != null) {
             resault = String.format("%d %s %s", showMessageCount(), addTimestamp(message), severityDecorate(message));
         } else if (showMessageCount() % Counter.PAGE_SIZE == 0) {
             resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(message));
@@ -41,19 +41,39 @@ public class MessageService {
         return resault;
     }
 
-
-    public static void log (Message... messages) {
-        for (Message counter : messages) {
-            print(counter);
-        }
+    /**
+     * Метод для вывода сообщений в консоль
+     *
+     * @param messages варарг сообщений
+     */
+    public static void log(Message... messages) {
+        print(messages);
     }
 
-    public static void log (MessageOrder orderBy, Message... messages) {
+    /**
+     * Метод API для вывода сообщений в консоль с сортировкой по порядку
+     *
+     * @param messages варарг сообщений
+     */
+    public static void log(MessageOrder orderBy, Message... messages) {
         print(orderBy, messages);
     }
 
-    public static void log ( Doubling doubling,Message... messages){
+    /**
+     * Метод API для вывода сообщений в консоль с возможностью убрать дубли
+     *
+     * @param messages варарг сообщений
+     */
+    public static void log(Doubling doubling, Message... messages) {
         print(doubling, messages);
     }
 
+    /**
+     * Метод API для вывода сообщений в консоль с возможностью убрать дубли и отсортировать сообщения
+     *
+     * @param messages варарг сообщений
+     */
+    public static void log(MessageOrder orderBy, Doubling doubling, Message... messages) {
+        print(orderBy, doubling, messages);
+    }
 }
