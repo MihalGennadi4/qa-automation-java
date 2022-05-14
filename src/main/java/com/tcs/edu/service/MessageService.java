@@ -1,18 +1,22 @@
 package com.tcs.edu.service;
 
 import com.tcs.edu.counter.Counter;
+import com.tcs.edu.decorator.Decorator;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.printer.Printer;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
 import static com.tcs.edu.counter.Counter.showMessageCount;
 import static com.tcs.edu.decorator.SeverityMessageDecorator.severityDecorate;
-import static com.tcs.edu.decorator.TimestampMessageDecorator.addTimestamp;
-import static com.tcs.edu.printer.ConsolePrinter.print;
 
 /**
  * Обработка сообщений
  */
-public class MessageService {
+public class MessageService implements Service {
+    private final Printer printer = new ConsolePrinter();
+    private final Decorator decorate = new TimestampMessageDecorator();
 
     /**
      * Собирает и обрабатывает сообщение по поступившим на вход параметрам.
@@ -23,21 +27,21 @@ public class MessageService {
      * Добавляет значение уровня/важности сообщения
      *
      * @author m.petrukhin
+     * @return возвращает отформатированную строку
      */
-    public static String processMessage(Message message) {
+    public String processMessage(Message message) {
 
         messageCounter();
         String resault;
         if (message != null && 0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
-            resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(message));
+            resault = String.format("%d %s %s \n---", showMessageCount(), decorate.addTimestamp(message), severityDecorate(message));
         } else if (message != null) {
-            resault = String.format("%d %s %s", showMessageCount(), addTimestamp(message), severityDecorate(message));
+            resault = String.format("%d %s %s", showMessageCount(), decorate.addTimestamp(message), severityDecorate(message));
         } else if (showMessageCount() % Counter.PAGE_SIZE == 0) {
-            resault = String.format("%d %s %s \n---", showMessageCount(), addTimestamp(message), severityDecorate(message));
+            resault = String.format("%d %s %s \n---", showMessageCount(), decorate.addTimestamp(message), severityDecorate(message));
         } else {
-            resault = String.format("%d %s %s", showMessageCount(), addTimestamp(message), severityDecorate(message));
+            resault = String.format("%d %s %s", showMessageCount(), decorate.addTimestamp(message), severityDecorate(message));
         }
-
         return resault;
     }
 
@@ -46,8 +50,8 @@ public class MessageService {
      *
      * @param messages варарг сообщений
      */
-    public static void log(Message... messages) {
-        print(messages);
+    public void log(Message... messages) {
+        printer.print(messages);
     }
 
     /**
@@ -55,8 +59,8 @@ public class MessageService {
      *
      * @param messages варарг сообщений
      */
-    public static void log(MessageOrder orderBy, Message... messages) {
-        print(orderBy, messages);
+    public void log(MessageOrder orderBy, Message... messages) {
+        printer.print(orderBy, messages);
     }
 
     /**
@@ -64,8 +68,8 @@ public class MessageService {
      *
      * @param messages варарг сообщений
      */
-    public static void log(Doubling doubling, Message... messages) {
-        print(doubling, messages);
+    public void log(Doubling doubling, Message... messages) {
+        printer.print(doubling, messages);
     }
 
     /**
@@ -73,7 +77,7 @@ public class MessageService {
      *
      * @param messages варарг сообщений
      */
-    public static void log(MessageOrder orderBy, Doubling doubling, Message... messages) {
-        print(orderBy, doubling, messages);
+    public void log(MessageOrder orderBy, Doubling doubling, Message... messages) {
+        printer.print(orderBy, doubling, messages);
     }
 }
