@@ -9,7 +9,7 @@ import java.time.Instant;
  * Класс для изменениий принятых на вход сообщений.
  */
 
-public class TimestampMessageDecorator implements Decorator{
+public class TimestampMessageDecorator implements Decorator {
 
     /**
      * Метод декорации сообщений.
@@ -18,12 +18,11 @@ public class TimestampMessageDecorator implements Decorator{
      * @param message сообщение принимаемое на вход.
      * @author m.petrukhin
      */
-    @Override
     public Object addTimestamp(Message message) {
 
         String decoratedMessage;
-        if (message != null){
-        decoratedMessage = String.format("%s %s", Instant.now(), message.getBody());
+        if (message != null) {
+            decoratedMessage = String.format("%s %s", Instant.now(), message.getBody());
         } else decoratedMessage = String.format("%s", Instant.now());
         return decoratedMessage;
     }

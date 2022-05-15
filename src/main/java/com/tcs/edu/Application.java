@@ -1,6 +1,9 @@
 package com.tcs.edu;
 
+import com.tcs.edu.decorator.SeverityMessageDecorator;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.printer.ConsolePrinter;
 import com.tcs.edu.service.MessageService;
 
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
@@ -24,7 +27,7 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        MessageService service = new MessageService();
+        MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
         Message message1 = new Message(MAJOR, "One");
         Message message2 = new Message(MAJOR, "Two");
         Message message3 = new Message(MAJOR, "Two");

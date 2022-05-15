@@ -42,7 +42,7 @@ public class OrderedDistinctedMessageService implements Service {
                         found = false;
                     }
                 }
-                if (found == false) {
+                if (!found) {
                     output[count] = messages[count];
 
                     if (messages[count].getBody() != null) {
@@ -54,6 +54,27 @@ public class OrderedDistinctedMessageService implements Service {
             for (int count = 0; count < messages.length; count++) {
                 output[count] = messages[count];
             }
+
+        }
+        return output;
+    }
+
+    /**
+     * Сортирует сообщения по порядку.
+     *
+     * @param orderBy  DESC - обратный порядок, ASC - обычный порядок
+     * @param messages варарг сообщений на вход
+     * @return обработанный варарг сообщений на выход
+     */
+    public Message[] orderedMessage(MessageOrder orderBy, Message... messages) {
+        Message[] output = new Message[messages.length];
+        int countReverse = 0;
+        if (orderBy == DESC) {
+            for (int counter = messages.length - 1; counter >= 0; counter--) {
+                output[counter] = messages[countReverse];
+                countReverse++;
+            }
+
 
         }
         return output;
@@ -82,26 +103,5 @@ public class OrderedDistinctedMessageService implements Service {
     @Override
     public void log(MessageOrder orderBy, Doubling doubling, Message... message) {
 
-    }
-
-    /**
-     * Сортирует сообщения по порядку.
-     *
-     * @param orderBy  DESC - обратный порядок, ASC - обычный порядок
-     * @param messages варарг сообщений на вход
-     * @return обработанный варарг сообщений на выход
-     */
-    public Message[] orderedMessage(MessageOrder orderBy, Message... messages) {
-        Message[] output = new Message[messages.length];
-        int countReverse = 0;
-        if (orderBy == DESC) {
-            for (int counter = messages.length - 1; counter >= 0; counter--) {
-                output[counter] = messages[countReverse];
-                countReverse++;
-            }
-
-
-        }
-        return output;
     }
 }

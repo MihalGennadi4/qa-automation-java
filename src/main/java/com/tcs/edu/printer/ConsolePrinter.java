@@ -1,6 +1,8 @@
 package com.tcs.edu.printer;
 
 
+import com.tcs.edu.decorator.SeverityMessageDecorator;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.service.*;
 
@@ -10,7 +12,6 @@ import com.tcs.edu.service.*;
  */
 public class ConsolePrinter implements Printer {
 
-
     /**
      * Метод print
      * Предназначен для вывода сообщений в консоль.
@@ -19,12 +20,11 @@ public class ConsolePrinter implements Printer {
      * @author m.petrukhin
      */
     public void print(Message... message) {
-        final Service service = new MessageService();
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
         for (Message current : message) {
             System.out.println(service.processMessage(current));
         }
     }
-
 
 
     /**
@@ -34,9 +34,9 @@ public class ConsolePrinter implements Printer {
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
     public void print(MessageOrder orderBy, Message... messages) {
-        final Service service = new MessageService();
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
         final Service serviceOrder = new OrderedDistinctedMessageService();
-        Message[] output = new Message[messages.length];
+        Message[] output;
         output = serviceOrder.orderedMessage(orderBy, messages);
         for (Message current : output) {
             System.out.println(service.processMessage(current));
@@ -51,9 +51,9 @@ public class ConsolePrinter implements Printer {
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
     public void print(Doubling doubling, Message... messages) {
-        final Service service = new MessageService();
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
         final Service serviceDistinct = new OrderedDistinctedMessageService();
-        Message[] output = new Message[messages.length];
+        Message[] output;
         output = serviceDistinct.distinctedMessage(doubling, messages);
         for (Message current : output) {
             System.out.println(service.processMessage(current));
@@ -71,8 +71,8 @@ public class ConsolePrinter implements Printer {
     public void print(MessageOrder orderBy, Doubling doubling, Message... messages) {
 
         final Service serviceOD = new OrderedDistinctedMessageService();
-        final Service service = new MessageService();
-        Message[] output = new Message[messages.length];
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        Message[] output;
         output = serviceOD.orderedMessage(orderBy, messages);
         output = serviceOD.distinctedMessage(doubling, output);
         for (Message current : output) {

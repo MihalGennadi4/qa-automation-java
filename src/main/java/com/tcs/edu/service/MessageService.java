@@ -2,10 +2,7 @@ package com.tcs.edu.service;
 
 import com.tcs.edu.counter.Counter;
 import com.tcs.edu.decorator.Decorator;
-import com.tcs.edu.decorator.SeverityMessageDecorator;
-import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.printer.ConsolePrinter;
 import com.tcs.edu.printer.Printer;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
@@ -15,9 +12,22 @@ import static com.tcs.edu.counter.Counter.showMessageCount;
  * Обработка сообщений
  */
 public class MessageService implements Service {
-    private final Printer printer = new ConsolePrinter();
-    private final Decorator decorateTime = new TimestampMessageDecorator();
-    private final Decorator decorateSeverity = new SeverityMessageDecorator();
+
+    private Printer printer;
+    private Decorator decorateTime;
+    private Decorator decorateSeverity;
+
+    /**
+     * @param printer Способ печати
+     * @param Severity Декорация уровня сообщений
+     * @param Timestamp Декорация времени
+     */
+    public MessageService(Printer printer,Decorator Severity,Decorator Timestamp) {
+        this.printer = printer;
+        this.decorateTime = Timestamp;
+        this.decorateSeverity = Severity;
+    }
+
 
 
 
@@ -29,8 +39,8 @@ public class MessageService implements Service {
      * Делит на "страницы"
      * Добавляет значение уровня/важности сообщения
      *
-     * @author m.petrukhin
      * @return возвращает отформатированную строку
+     * @author m.petrukhin
      */
     public String processMessage(Message message) {
 
