@@ -10,7 +10,7 @@ import java.time.Instant;
  */
 
 public class TimestampMessageDecorator implements Decorator{
- @Override
+
     /**
      * Метод декорации сообщений.
      * Добавляет текущее время перед выводом сообщения принятого на вход
@@ -18,6 +18,7 @@ public class TimestampMessageDecorator implements Decorator{
      * @param message сообщение принимаемое на вход.
      * @author m.petrukhin
      */
+    @Override
     public Object addTimestamp(Message message) {
 
         String decoratedMessage;
@@ -25,6 +26,11 @@ public class TimestampMessageDecorator implements Decorator{
         decoratedMessage = String.format("%s %s", Instant.now(), message.getBody());
         } else decoratedMessage = String.format("%s", Instant.now());
         return decoratedMessage;
+    }
+
+    @Override
+    public String severityDecorate(Message message) {
+        return null;
     }
 
 }

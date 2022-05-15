@@ -2,7 +2,13 @@ package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
 
-public class SeverityMessageDecorator {
+public class SeverityMessageDecorator implements Decorator{
+
+
+    @Override
+    public Object addTimestamp(Message message) {
+        return null;
+    }
 
     /**
      * Перводит уровень сообщения в строку и добавляет соответствущее кол-во "!".
@@ -13,7 +19,8 @@ public class SeverityMessageDecorator {
      *
      * @author m.petrukhin
      */
-    public static String severityDecorate(Message message) {
+    @Override
+    public String severityDecorate(Message message) {
         String severityString = null;
             switch (message.getLevel()) {
                 case MINOR:

@@ -9,7 +9,7 @@ import static com.tcs.edu.service.Doubling.DOUBLES;
 import static com.tcs.edu.service.MessageOrder.ASC;
 import static com.tcs.edu.service.MessageOrder.DESC;
 
-public class OrderedDistinctedMessageService {
+public class OrderedDistinctedMessageService implements Service {
 
     /**
      * Убирает дубли из выходных сообщений. Body у дублей заменяет заменяет на "".
@@ -18,7 +18,7 @@ public class OrderedDistinctedMessageService {
      * @param messages варарг сообщений на вход
      * @return возвращает варарг сообщений такой же длинны как и варарг полученный на вход
      */
-    public static Message[] distinctedMessage(Doubling doubling, Message... messages) {
+    public Message[] distinctedMessage(Doubling doubling, Message... messages) {
         Message[] output = new Message[messages.length];
         String[] toFind = new String[messages.length];
         if (doubling == DOUBLES) {
@@ -59,6 +59,31 @@ public class OrderedDistinctedMessageService {
         return output;
     }
 
+    @Override
+    public String processMessage(Message messages) {
+        return null;
+    }
+
+    @Override
+    public void log(Message... message) {
+
+    }
+
+    @Override
+    public void log(Doubling doubling, Message... message) {
+
+    }
+
+    @Override
+    public void log(MessageOrder orderBy, Message... message) {
+
+    }
+
+    @Override
+    public void log(MessageOrder orderBy, Doubling doubling, Message... message) {
+
+    }
+
     /**
      * Сортирует сообщения по порядку.
      *
@@ -66,7 +91,7 @@ public class OrderedDistinctedMessageService {
      * @param messages варарг сообщений на вход
      * @return обработанный варарг сообщений на выход
      */
-    public static Message[] orderedMessage(MessageOrder orderBy, Message... messages) {
+    public Message[] orderedMessage(MessageOrder orderBy, Message... messages) {
         Message[] output = new Message[messages.length];
         int countReverse = 0;
         if (orderBy == DESC) {
