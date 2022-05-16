@@ -1,5 +1,7 @@
 package com.tcs.edu.decorator;
 
+import com.tcs.edu.domain.Message;
+
 import java.time.Instant;
 
 
@@ -7,7 +9,7 @@ import java.time.Instant;
  * Класс для изменениий принятых на вход сообщений.
  */
 
-public class TimestampMessageDecorator {
+public class TimestampMessageDecorator implements Decorator {
 
     /**
      * Метод декорации сообщений.
@@ -16,11 +18,18 @@ public class TimestampMessageDecorator {
      * @param message сообщение принимаемое на вход.
      * @author m.petrukhin
      */
-    public static String addTimestamp(String message) {
+    public Object addTimestamp(Message message) {
 
         String decoratedMessage;
-        decoratedMessage = String.format("%s %s", Instant.now(), message);
+        if (message != null) {
+            decoratedMessage = String.format("%s %s", Instant.now(), message.getBody());
+        } else decoratedMessage = String.format("%s", Instant.now());
         return decoratedMessage;
+    }
+
+    @Override
+    public String severityDecorate(Message message) {
+        return null;
     }
 
 }

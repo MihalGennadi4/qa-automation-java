@@ -1,12 +1,15 @@
 package com.tcs.edu;
 
-import com.tcs.edu.decorator.Severity;
-import static com.tcs.edu.decorator.Severity.MAJOR;
-import static com.tcs.edu.printer.ConsolePrinter.print;
-import static com.tcs.edu.service.Doubling.DOUBLES;
-import static com.tcs.edu.service.MessageOrder.ASC;
-import static com.tcs.edu.service.MessageOrder.DESC;
+import com.tcs.edu.decorator.SeverityMessageDecorator;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
+import com.tcs.edu.domain.Message;
+import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.service.MessageService;
+
+import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
+import static com.tcs.edu.decorator.SeverityLevel.MINOR;
 import static com.tcs.edu.service.Doubling.DISTINCT;
+import static com.tcs.edu.service.MessageOrder.DESC;
 
 
 /**
@@ -24,6 +27,16 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        print(MAJOR, DISTINCT, "Первый", "Второй", "Второй", "Четвертый" , "Первый", "Шестой","Седьмой");
+        MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        Message message1 = new Message(MAJOR, "One");
+        Message message2 = new Message(MAJOR, "Two");
+        Message message3 = new Message(MAJOR, "Two");
+        Message message4 = new Message(MINOR, "Four");
+        Message message5 = new Message(MINOR, "Five");
+        Message message6 = new Message(MAJOR, "One");
+        service.log(message1, message2, message3, message4, message5, message6);
+        service.log(DESC, message1, message2, message3, message4, message5, message6);
+        service.log(DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
     }
+
 }

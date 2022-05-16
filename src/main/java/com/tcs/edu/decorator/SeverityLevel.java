@@ -3,6 +3,6 @@ package com.tcs.edu.decorator;
 /**
  * Уровни критичности сообщений
  */
-public enum Severity {
+public enum SeverityLevel {
     MINOR,REGULAR,MAJOR
 }

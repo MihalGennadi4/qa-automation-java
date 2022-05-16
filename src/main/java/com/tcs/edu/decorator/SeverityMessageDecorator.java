@@ -1,19 +1,23 @@
 package com.tcs.edu.decorator;
 
-public class SeverityMessageDecorator {
+import com.tcs.edu.domain.Message;
+
+public class SeverityMessageDecorator implements Decorator {
+
 
     /**
      * Перводит уровень сообщения в строку и добавляет соответствущее кол-во "!".
-     * Считаем что MINOR маловажные события
+     * Считаем что:
+     * MINOR - маловажные события
      * REGULAR - обычные
      * MAJOR - важные
      *
-     * @param Severity Важность сообщения
      * @author m.petrukhin
      */
-    public static String severityDecorate(Severity Severity) {
-        String severityString = null;
-        switch (Severity) {
+
+    public String severityDecorate(Message message) {
+        String severityString;
+        switch (message.getLevel()) {
             case MINOR:
                 severityString = "()";
                 break;
@@ -26,6 +30,13 @@ public class SeverityMessageDecorator {
             default:
                 severityString = "";
         }
+
         return severityString;
     }
+
+    @Override
+    public Object addTimestamp(Message message) {
+        return null;
+    }
 }
+

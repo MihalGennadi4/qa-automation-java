@@ -1,54 +1,45 @@
 package com.tcs.edu.printer;
 
 
-import com.tcs.edu.decorator.Severity;
-import com.tcs.edu.service.Doubling;
-import com.tcs.edu.service.MessageOrder;
-
-import java.util.Objects;
-
-import static com.tcs.edu.service.Doubling.DISTINCT;
-import static com.tcs.edu.service.Doubling.DOUBLES;
-import static com.tcs.edu.service.MessageOrder.ASC;
-import static com.tcs.edu.service.MessageOrder.DESC;
-import static com.tcs.edu.service.MessageService.processMessage;
+import com.tcs.edu.decorator.SeverityMessageDecorator;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
+import com.tcs.edu.domain.Message;
+import com.tcs.edu.service.*;
 
 /**
  * Класс com.tcs.edu.printer.ConsolePrinter
  * Включает в себя методы связанные с выводом сообщений в консоль.
  */
-public class ConsolePrinter {
+public class ConsolePrinter implements Printer {
 
     /**
      * Метод print
      * Предназначен для вывода сообщений в консоль.
      *
-     * @param messages сообщение (или несколько) для вывода в консоль.
-     * @param level    уровень сообщения.
+     * @param message - DTO содержащее сообщение и сопутствующую информацию
      * @author m.petrukhin
      */
-    public static void print(Severity level, String... messages) {
-        for (String current : messages) {
-            System.out.println(processMessage(level, current));
+    public void print(Message... message) {
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        for (Message current : message) {
+            System.out.println(service.processMessage(current));
         }
     }
 
+
     /**
-     * Ptint с возможностью изменения порядка вывода сообщений.
+     * Print с возможностью изменения порядка вывода сообщений.
      *
-     * @param level    уровень сообщения.
      * @param orderBy  определяет возрастающий или убывающий порядок вывода.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public static void print(Severity level, MessageOrder orderBy, String... messages) {
-        if (orderBy == ASC) {
-            for (String current : messages) {
-                System.out.println(processMessage(level, current));
-            }
-        } else if (orderBy == DESC) {
-            for (int counter = messages.length - 1; counter >= 0; counter--) {
-                System.out.println(processMessage(level, messages[counter]));
-            }
+    public void print(MessageOrder orderBy, Message... messages) {
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        final Service serviceOrder = new OrderedDistinctedMessageService();
+        Message[] output;
+        output = serviceOrder.orderedMessage(orderBy, messages);
+        for (Message current : output) {
+            System.out.println(service.processMessage(current));
         }
     }
 
@@ -56,41 +47,44 @@ public class ConsolePrinter {
     /**
      * Print с возможностью убрать дубли из печати.
      *
-     * @param level    уровень сообщения.
      * @param doubling DISTINCT - убрать дубли, DOUBLES - оставить дубли.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public static void print(Severity level, Doubling doubling, String... messages) {
-        if (doubling == DOUBLES) {
-            for (String current : messages) {
-                System.out.println(processMessage(level, current));
-            }
-        } else if (doubling == DISTINCT) {
-            String[] output = new String[messages.length];
-            boolean found = false;
-            int order = 0;
-            for (int count = 0; count < messages.length; count++) {
-                String searchedValue = messages[order];
-                for (String x : output) {
-                    if (Objects.equals(x, searchedValue)) {
-                        found = true;
-                        order++;
-                        break;
-                    } else if (!Objects.equals(x, searchedValue)) {
-                        found = false;
-                    }
-                }
-                if (found == false) {
-                    output[count] = messages[count];
-                    order++;
-                }
-            }
-            for (String print : output) {
-                System.out.println(processMessage(level, print));
-            }
+    public void print(Doubling doubling, Message... messages) {
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        final Service serviceDistinct = new OrderedDistinctedMessageService();
+        Message[] output;
+        output = serviceDistinct.distinctedMessage(doubling, messages);
+        for (Message current : output) {
+            System.out.println(service.processMessage(current));
         }
     }
+
+
+    /**
+     * Print с возможностью сортировки сообщений и убирания дублей
+     *
+     * @param orderBy  отвечает за сортировку
+     * @param doubling отвечает за убирание дублей
+     * @param messages варарг сообщений
+     */
+    public void print(MessageOrder orderBy, Doubling doubling, Message... messages) {
+
+        final Service serviceOD = new OrderedDistinctedMessageService();
+        final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        Message[] output;
+        output = serviceOD.orderedMessage(orderBy, messages);
+        output = serviceOD.distinctedMessage(doubling, output);
+        for (Message current : output) {
+            System.out.println(service.processMessage(current));
+        }
+
+
+    }
 }
+
+
+
 
 
 
