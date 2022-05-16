@@ -41,7 +41,6 @@ public class MessageService extends ValidatedService implements Service {
      * @author m.petrukhin
      */
     public String processMessage(Message message) {
-
         messageCounter();
         String resault;
         if (showMessageCount() % Counter.PAGE_SIZE == 0) {

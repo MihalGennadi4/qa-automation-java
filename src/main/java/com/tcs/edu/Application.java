@@ -34,9 +34,21 @@ class Application {
         Message message4 = new Message(MINOR, "Four");
         Message message5 = new Message(MINOR, "Five");
         Message message6 = new Message(MAJOR, "One");
+        System.out.println("ДЗ 9.2 Переопределение toString");
+        System.out.println(message1 + "\n");
+        System.out.println("ДЗ 9.2 Сравниваем объекты на изи");
+        if (message1.equals(message6)) {
+            System.out.println("1 == 6?. Объекты одинаковы\n");
+        }
+        if (!message1.equals(message5)) {
+            System.out.println("1 == 5?. Объекты разные\n");
+        }
+        System.out.println("ДЗ 9.2 вывеодим hash");
+        System.out.println(message1.hashCode() + "\n");
         service.log(message1, message2, message3, message4, message5, message6);
         service.log(DESC, message1, message2, message3, message4, message5, message6);
         service.log(DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
+
     }
 
 }

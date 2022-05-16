@@ -1,6 +1,5 @@
 package com.tcs.edu.printer;
 
-
 import com.tcs.edu.decorator.SeverityMessageDecorator;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
@@ -69,7 +68,6 @@ public class ConsolePrinter implements Printer {
      * @param messages варарг сообщений
      */
     public void print(MessageOrder orderBy, Doubling doubling, Message... messages) {
-
         final Service serviceOD = new OrderedDistinctedMessageService();
         final Service service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
         Message[] output;
@@ -78,8 +76,6 @@ public class ConsolePrinter implements Printer {
         for (Message current : output) {
             System.out.println(service.processMessage(current));
         }
-
-
     }
 }
 

@@ -19,8 +19,8 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      * @return возвращает варарг сообщений такой же длинны как и варарг полученный на вход
      */
     public Message[] distinctedMessage(Doubling doubling, Message... messages) {
-            Message[] output = new Message[messages.length];
-            String[] toFind = new String[messages.length];
+        Message[] output = new Message[messages.length];
+        String[] toFind = new String[messages.length];
         if (super.isArgsValid(messages)) {
             if (doubling == DOUBLES) {
                 for (int count = 0; count < messages.length; count++) {
@@ -55,7 +55,6 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
                 for (int count = 0; count < messages.length; count++) {
                     output[count] = messages[count];
                 }
-
             }
             return output;
         }
@@ -77,8 +76,6 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
                 output[counter] = messages[countReverse];
                 countReverse++;
             }
-
-
         }
         return output;
     }

@@ -7,8 +7,11 @@ import com.tcs.edu.service.MessageOrder;
 public interface Printer {
 
     void print(Message... message);
+
     void print(Doubling doubling, Message... message);
+
     void print(MessageOrder orderBy, Message... message);
+
     void print(MessageOrder orderBy, Doubling doubling, Message... message);
 
 }
