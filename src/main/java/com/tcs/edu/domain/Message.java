@@ -10,6 +10,8 @@ public class Message {
         this.level = level;
         this.body = body;
     }
+    public Message() {
+    }
 
     public SeverityLevel getLevel() {
         return level;

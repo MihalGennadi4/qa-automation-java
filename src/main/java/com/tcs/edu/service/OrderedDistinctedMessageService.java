@@ -9,7 +9,7 @@ import static com.tcs.edu.service.Doubling.DOUBLES;
 import static com.tcs.edu.service.MessageOrder.ASC;
 import static com.tcs.edu.service.MessageOrder.DESC;
 
-public class OrderedDistinctedMessageService implements Service {
+public class OrderedDistinctedMessageService extends ValidatedService implements Service {
 
     /**
      * Убирает дубли из выходных сообщений. Body у дублей заменяет заменяет на "".
@@ -19,42 +19,45 @@ public class OrderedDistinctedMessageService implements Service {
      * @return возвращает варарг сообщений такой же длинны как и варарг полученный на вход
      */
     public Message[] distinctedMessage(Doubling doubling, Message... messages) {
-        Message[] output = new Message[messages.length];
-        String[] toFind = new String[messages.length];
-        if (doubling == DOUBLES) {
-            for (int count = 0; count < messages.length; count++) {
-                output[count] = messages[count];
-            }
-        } else if (doubling == DISTINCT) {
-            boolean found = false;
-            int order = 0;
-            for (int count = 0; count < messages.length; count++) {
-                String searchedValue = messages[order].getBody();
-                for (String x : toFind) {
-                    if (Objects.equals(x, searchedValue)) {
-                        found = true;
-                        output[count] = messages[count];
-                        output[order].setBody("");
-                        output[order].setLevel(messages[count].getLevel());
-                        order++;
-                        break;
-                    } else if (!Objects.equals(x, searchedValue)) {
-                        found = false;
-                    }
-                }
-                if (!found) {
+            Message[] output = new Message[messages.length];
+            String[] toFind = new String[messages.length];
+        if (super.isArgsValid(messages)) {
+            if (doubling == DOUBLES) {
+                for (int count = 0; count < messages.length; count++) {
                     output[count] = messages[count];
-
-                    if (messages[count].getBody() != null) {
-                        toFind[count] = messages[count].getBody();
-                    }
-                    order++;
                 }
-            }
-            for (int count = 0; count < messages.length; count++) {
-                output[count] = messages[count];
-            }
+            } else if (doubling == DISTINCT) {
+                boolean found = false;
+                int order = 0;
+                for (int count = 0; count < messages.length; count++) {
+                    String searchedValue = messages[order].getBody();
+                    for (String x : toFind) {
+                        if (Objects.equals(x, searchedValue)) {
+                            found = true;
+                            output[count] = messages[count];
+                            output[order].setBody("");
+                            output[order].setLevel(messages[count].getLevel());
+                            order++;
+                            break;
+                        } else if (!Objects.equals(x, searchedValue)) {
+                            found = false;
+                        }
+                    }
+                    if (!found) {
+                        output[count] = messages[count];
 
+                        if (messages[count].getBody() != null) {
+                            toFind[count] = messages[count].getBody();
+                        }
+                        order++;
+                    }
+                }
+                for (int count = 0; count < messages.length; count++) {
+                    output[count] = messages[count];
+                }
+
+            }
+            return output;
         }
         return output;
     }
