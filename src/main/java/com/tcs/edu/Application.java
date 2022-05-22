@@ -45,9 +45,9 @@ class Application {
         }
         System.out.println("ДЗ 9.2 вывеодим hash");
         System.out.println(message1.hashCode() + "\n");
-        service.log(message1, message2, message3, message4, message5, message6);
-        service.log(DESC, message1, message2, message3, message4, message5, message6);
-        service.log(DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
+        service.log(service, message1, message2, message3, message4, message5, message6);
+        service.log(service, DESC, message1, message2, message3, message4, message5, message6);
+        service.log(service,DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
 
     }
 

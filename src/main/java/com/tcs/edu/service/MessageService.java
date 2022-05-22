@@ -12,7 +12,6 @@ import static com.tcs.edu.counter.Counter.showMessageCount;
  * Обработка сообщений
  */
 public class MessageService extends ValidatedService implements Service {
-
     private Printer printer;
     private Decorator decorateTime;
     private Decorator decorateSeverity;
@@ -56,9 +55,9 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(Message... messages) {
+    public void log(MessageService service, Message... messages) {
         if (isArgsValid() == true) {
-            printer.print(messages);
+            printer.print(service, messages);
         }
     }
 
@@ -67,9 +66,9 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageOrder orderBy, Message... messages) {
+    public void log(MessageService service,MessageOrder orderBy, Message... messages) {
         if (isArgsValid() == true) {
-            printer.print(orderBy, messages);
+            printer.print(service, orderBy, messages);
         }
     }
 
@@ -78,9 +77,9 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(Doubling doubling, Message... messages) {
+    public void log(MessageService service,Doubling doubling, Message... messages) {
         if (isArgsValid() == true) {
-            printer.print(doubling, messages);
+            printer.print(service, doubling, messages);
         }
     }
 
@@ -89,9 +88,9 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageOrder orderBy, Doubling doubling, Message... messages) {
+    public void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... messages) {
         if (isArgsValid() == true) {
-            printer.print(orderBy, doubling, messages);
+            printer.print(service,orderBy, doubling, messages);
         }
     }
 

@@ -86,22 +86,22 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
     }
 
     @Override
-    public void log(Message... message) {
+    public void log(MessageService service, Message... message) {
 
     }
 
     @Override
-    public void log(Doubling doubling, Message... message) {
+    public void log(MessageService service,Doubling doubling, Message... message) {
 
     }
 
     @Override
-    public void log(MessageOrder orderBy, Message... message) {
+    public void log(MessageService service,MessageOrder orderBy, Message... message) {
 
     }
 
     @Override
-    public void log(MessageOrder orderBy, Doubling doubling, Message... message) {
+    public void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... message) {
 
     }
 }
