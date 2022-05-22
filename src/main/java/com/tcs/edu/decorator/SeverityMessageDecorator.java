@@ -27,6 +27,8 @@ public class SeverityMessageDecorator implements Decorator {
             case MAJOR:
                 severityString = "(!!!)";
                 break;
+            case MISSED_PARAM:
+                severityString = "(Missed severity param)";
             default:
                 severityString = "";
         }

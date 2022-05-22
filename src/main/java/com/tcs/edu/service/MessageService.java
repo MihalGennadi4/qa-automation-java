@@ -11,24 +11,21 @@ import static com.tcs.edu.counter.Counter.showMessageCount;
 /**
  * Обработка сообщений
  */
-public class MessageService implements Service {
-
+public class MessageService extends ValidatedService implements Service {
     private Printer printer;
     private Decorator decorateTime;
     private Decorator decorateSeverity;
 
     /**
-     * @param printer Способ печати
-     * @param Severity Декорация уровня сообщений
+     * @param printer   Способ печати
+     * @param Severity  Декорация уровня сообщений
      * @param Timestamp Декорация времени
      */
-    public MessageService(Printer printer,Decorator Severity,Decorator Timestamp) {
+    public MessageService(Printer printer, Decorator Severity, Decorator Timestamp) {
         this.printer = printer;
         this.decorateTime = Timestamp;
         this.decorateSeverity = Severity;
     }
-
-
 
 
     /**
@@ -43,14 +40,9 @@ public class MessageService implements Service {
      * @author m.petrukhin
      */
     public String processMessage(Message message) {
-
         messageCounter();
         String resault;
-        if (message != null && 0 != showMessageCount() && showMessageCount() % Counter.PAGE_SIZE == 0) {
-            resault = String.format("%d %s %s \n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
-        } else if (message != null) {
-            resault = String.format("%d %s %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
-        } else if (showMessageCount() % Counter.PAGE_SIZE == 0) {
+        if (showMessageCount() % Counter.PAGE_SIZE == 0) {
             resault = String.format("%d %s %s \n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
         } else {
             resault = String.format("%d %s %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
@@ -63,8 +55,10 @@ public class MessageService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(Message... messages) {
-        printer.print(messages);
+    public void log(MessageService service, Message... messages) {
+        if (isArgsValid() == true) {
+            printer.print(service, messages);
+        }
     }
 
     /**
@@ -72,8 +66,10 @@ public class MessageService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageOrder orderBy, Message... messages) {
-        printer.print(orderBy, messages);
+    public void log(MessageService service,MessageOrder orderBy, Message... messages) {
+        if (isArgsValid() == true) {
+            printer.print(service, orderBy, messages);
+        }
     }
 
     /**
@@ -81,8 +77,10 @@ public class MessageService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(Doubling doubling, Message... messages) {
-        printer.print(doubling, messages);
+    public void log(MessageService service,Doubling doubling, Message... messages) {
+        if (isArgsValid() == true) {
+            printer.print(service, doubling, messages);
+        }
     }
 
     /**
@@ -90,8 +88,10 @@ public class MessageService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageOrder orderBy, Doubling doubling, Message... messages) {
-        printer.print(orderBy, doubling, messages);
+    public void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... messages) {
+        if (isArgsValid() == true) {
+            printer.print(service,orderBy, doubling, messages);
+        }
     }
 
     @Override
