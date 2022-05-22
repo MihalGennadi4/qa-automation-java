@@ -7,11 +7,11 @@ public interface Service {
 
     void log(MessageService service, Message... message);
 
-    void log(MessageService service,Doubling doubling, Message... message);
+    void log(MessageService service, Doubling doubling, Message... message);
 
-    void log(MessageService service,MessageOrder orderBy, Message... message);
+    void log(MessageService service, MessageOrder orderBy, Message... message);
 
-    void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... message);
+    void log(MessageService service, MessageOrder orderBy, Doubling doubling, Message... message);
 
     Message[] orderedMessage(MessageOrder orderBy, Message... messages);
 

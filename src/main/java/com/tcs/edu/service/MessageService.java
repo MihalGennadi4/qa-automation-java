@@ -3,6 +3,7 @@ package com.tcs.edu.service;
 import com.tcs.edu.counter.Counter;
 import com.tcs.edu.decorator.Decorator;
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.exeption.LogException;
 import com.tcs.edu.printer.Printer;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
@@ -56,9 +57,13 @@ public class MessageService extends ValidatedService implements Service {
      * @param messages варарг сообщений
      */
     public void log(MessageService service, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, messages);
+        try {
+            super.isArgsValid(messages);
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, messages);
+
     }
 
     /**
@@ -66,10 +71,14 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,MessageOrder orderBy, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, orderBy, messages);
+    public void log(MessageService service, MessageOrder orderBy, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, orderBy, messages);
+
     }
 
     /**
@@ -77,10 +86,14 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,Doubling doubling, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, doubling, messages);
+    public void log(MessageService service, Doubling doubling, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, doubling, messages);
+
     }
 
     /**
@@ -88,10 +101,14 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service,orderBy, doubling, messages);
+    public void log(MessageService service, MessageOrder orderBy, Doubling doubling, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, orderBy, doubling, messages);
+
     }
 
     @Override

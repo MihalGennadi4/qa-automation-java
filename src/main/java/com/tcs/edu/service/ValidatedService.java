@@ -4,9 +4,23 @@ import com.tcs.edu.domain.Message;
 
 public abstract class ValidatedService {
 
-    public boolean isArgsValid(Message... messages) {
-        if (messages == null) return false;
-        return true;
+    /**
+     * Проверяем входные параметры
+     *
+     * @param messages
+     */
+    public void isArgsValid(Message... messages) {
+        for (Message current : messages) {
+            if (current == null) {
+                throw new IllegalArgumentException("message потерялся и равен null");
+            } else if (current.getBody() == null) {
+                throw new NullPointerException("Получили null вместо body");
+            } else if (current.getLevel() == null) {
+                throw new NullPointerException("Получили null вместо severity");
+            }
+
+
+        }
     }
 }
 

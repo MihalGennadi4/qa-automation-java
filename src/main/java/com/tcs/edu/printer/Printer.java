@@ -9,10 +9,10 @@ public interface Printer {
 
     void print(MessageService service, Message... message);
 
-    void print(MessageService service,Doubling doubling, Message... message);
+    void print(MessageService service, Doubling doubling, Message... message);
 
-    void print(MessageService service,MessageOrder orderBy, Message... message);
+    void print(MessageService service, MessageOrder orderBy, Message... message);
 
-    void print(MessageService service,MessageOrder orderBy, Doubling doubling, Message... message);
+    void print(MessageService service, MessageOrder orderBy, Doubling doubling, Message... message);
 
 }

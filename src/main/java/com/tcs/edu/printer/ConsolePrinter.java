@@ -32,12 +32,12 @@ public class ConsolePrinter implements Printer {
      * @param orderBy  определяет возрастающий или убывающий порядок вывода.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public void print(MessageService service,MessageOrder orderBy, Message... messages) {
+    public void print(MessageService service, MessageOrder orderBy, Message... messages) {
         final Service serviceOrder = new OrderedDistinctedMessageService();
         Message[] output;
         output = serviceOrder.orderedMessage(orderBy, messages);
         for (Message current : output) {
-        System.out.println(service.processMessage(current));
+            System.out.println(service.processMessage(current));
         }
     }
 
@@ -48,7 +48,7 @@ public class ConsolePrinter implements Printer {
      * @param doubling DISTINCT - убрать дубли, DOUBLES - оставить дубли.
      * @param messages сообщение (или несколько) для вывода в консоль.
      */
-    public void print(MessageService service,Doubling doubling, Message... messages) {
+    public void print(MessageService service, Doubling doubling, Message... messages) {
         final Service serviceDistinct = new OrderedDistinctedMessageService();
         Message[] output;
         output = serviceDistinct.distinctedMessage(doubling, messages);
@@ -65,7 +65,7 @@ public class ConsolePrinter implements Printer {
      * @param doubling отвечает за убирание дублей
      * @param messages варарг сообщений
      */
-    public void print(MessageService service,MessageOrder orderBy, Doubling doubling, Message... messages) {
+    public void print(MessageService service, MessageOrder orderBy, Doubling doubling, Message... messages) {
         final Service serviceOD = new OrderedDistinctedMessageService();
         Message[] output;
         output = serviceOD.orderedMessage(orderBy, messages);
