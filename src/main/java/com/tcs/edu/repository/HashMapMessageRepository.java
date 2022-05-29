@@ -2,9 +2,7 @@ package com.tcs.edu.repository;
 
 import com.tcs.edu.domain.Message;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class HashMapMessageRepository implements MessageRepository {
     private final Map<UUID, Message> messages = new HashMap<>();
@@ -59,5 +57,24 @@ public class HashMapMessageRepository implements MessageRepository {
         return messagesRaid;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Collection<Message> findAll() {
+        return messages.values();
+    }
+
+    public Message[] findAllinArray(){
+        Collection<Message> test = findAll();
+        Message[] output = new Message[test.size()];
+        int count =0;
+        for (Message counter: test) {
+            output[count] = counter;
+            count++;
+        }
+        return output;
+    }
 
 }

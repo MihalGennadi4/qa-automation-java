@@ -29,18 +29,19 @@ class Application {
      */
     public static void main(String[] args) {
         MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
-        Message message1 = new Message(MAJOR, "One");
-        Message message2 = new Message(MAJOR, "Two");
-        Message message3 = new Message(MAJOR, "Two");
-        Message message4 = new Message(MINOR, "Four");
-        Message message5 = new Message(MINOR, "Five");
-        Message message6 = new Message(MAJOR, "One");
+        Message message1 = new Message(MAJOR, "Вывод 1");
+        Message message2 = new Message(MAJOR, "Вывод 2");
+        Message message3 = new Message(MAJOR, "Вывод 3");
+        Message message4 = new Message(MINOR, "Вывод 3");
+        Message message5 = new Message(MINOR, "Вывод 2");
+        Message message6 = new Message(MAJOR, "Вывод 4");
         Message brokenMessage = null;
 
 
         //service.log(service, message1, message2, message3, message4, message5, message6);
-        //service.log(service, DESC, message1, message2, message3, message4, message5, message6);
+        service.log(service, DESC, message1, message2, message3, message4, message5, message6);
         service.log(service, DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
+
 
 
     }

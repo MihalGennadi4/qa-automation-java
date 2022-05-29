@@ -126,7 +126,8 @@ public class MessageService extends ValidatedService implements Service {
         }
         UUID[] raid = messageRepository.create(messages);
         Message[] mRaid = messageRepository.findByPrimaryKey(raid);
-        printer.print(service, orderBy, doubling, mRaid);
+       // printer.print(service, orderBy, doubling, mRaid); //для вывода по ключу
+        printer.print(service, orderBy, doubling, messageRepository.findAllinArray()); //для вывода из коллекции
     }
 
     @Override
