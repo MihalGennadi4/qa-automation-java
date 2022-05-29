@@ -4,11 +4,15 @@ import com.tcs.edu.decorator.SeverityMessageDecorator;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.repository.MessageRepository;
 import com.tcs.edu.service.MessageService;
 import com.tcs.edu.repository.HashMapMessageRepository;
 
+import java.util.UUID;
+
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
 import static com.tcs.edu.decorator.SeverityLevel.MINOR;
+import static com.tcs.edu.repository.HashMapMessageRepository.*;
 import static com.tcs.edu.service.Doubling.DISTINCT;
 import static com.tcs.edu.service.MessageOrder.DESC;
 
@@ -28,7 +32,8 @@ class Application {
      * @author m.petrukhin
      */
     public static void main(String[] args) {
-        MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator());
+        MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator(), new HashMapMessageRepository());
+        HashMapMessageRepository repository = new HashMapMessageRepository();
         Message message1 = new Message(MAJOR, "Вывод 1");
         Message message2 = new Message(MAJOR, "Вывод 2");
         Message message3 = new Message(MAJOR, "Вывод 3");
@@ -37,11 +42,12 @@ class Application {
         Message message6 = new Message(MAJOR, "Вывод 4");
         Message brokenMessage = null;
 
-
+        UUID[] raid = repository.create(message1, message2, message3, message4, message5, message6);
+        Message[] mRaid = repository.findByPrimaryKey(raid);
         //service.log(service, message1, message2, message3, message4, message5, message6);
-        service.log(service, DESC, message1, message2, message3, message4, message5, message6);
-        service.log(service, DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
-
+        service.log(service, DESC, mRaid); // вывод по ключу
+        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findAll())); //вывод всего что есть в мапе
+        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findBySeverity(MAJOR))); //вывод по уровню собщений
 
 
     }

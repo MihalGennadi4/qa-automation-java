@@ -1,5 +1,6 @@
 package com.tcs.edu.repository;
 
+import com.tcs.edu.decorator.SeverityLevel;
 import com.tcs.edu.domain.Message;
 
 import java.util.*;
@@ -57,7 +58,9 @@ public class HashMapMessageRepository implements MessageRepository {
         return messagesRaid;
     }
 
-    /**Возвращает все сообщения из мапы в виде коллекции
+    /**
+     * Возвращает все сообщения из мапы в виде коллекции
+     *
      * @return коллекция сообщний
      */
     @Override
@@ -65,15 +68,32 @@ public class HashMapMessageRepository implements MessageRepository {
         return messages.values();
     }
 
-    /** Возвращает все сообщения из мапы в виде массива
+    /**
+     * Находит сообщения в мапе по Severity
      *
+     * @param by Severity level
+     * @return коллекция сообщений
+     */
+    @Override
+    public Collection<Message> findBySeverity(SeverityLevel by) {
+        Collection<Message> filteredMesages = new ArrayList<>();
+        for (Message current : messages.values()) {
+            if (current.getLevel() == by) filteredMesages.add(current);
+        }
+        return filteredMesages;
+    }
+
+    /**
+     * Превращает коллекцию сообщений в массив
+     *
+     * @param input коллекция сообщений
      * @return массив сообщений
      */
-    public Message[] findAlltoArray() {
-        Collection<Message> test = findAll();
-        Message[] output = new Message[test.size()];
+    public Message[] collectionToArray(Collection input) {
+        Collection<Message> toProcess = input;
+        Message[] output = new Message[input.size()];
         int count = 0;
-        for (Message counter : test) {
+        for (Message counter : toProcess) {
             output[count] = counter;
             count++;
         }

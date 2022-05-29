@@ -20,17 +20,19 @@ public class MessageService extends ValidatedService implements Service {
     final private Printer printer;
     final private Decorator decorateTime;
     final private Decorator decorateSeverity;
-    private MessageRepository messageRepository = new HashMapMessageRepository();
+    final private MessageRepository repository;
 
     /**
-     * @param printer   Способ печати
-     * @param Severity  Декорация уровня сообщений
-     * @param Timestamp Декорация времени
+     * @param printer    Способ печати
+     * @param severity   Декорация уровня сообщений
+     * @param timestamp  Декорация времени
+     * @param repository Используемый репозиторий
      */
-    public MessageService(Printer printer, Decorator Severity, Decorator Timestamp) {
+    public MessageService(Printer printer, Decorator severity, Decorator timestamp, MessageRepository repository) {
         this.printer = printer;
-        this.decorateTime = Timestamp;
-        this.decorateSeverity = Severity;
+        this.decorateTime = timestamp;
+        this.decorateSeverity = severity;
+        this.repository = repository;
     }
 
 
@@ -67,18 +69,11 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = messageRepository.create(messages);
-        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        UUID[] raid = repository.create(messages);
+        Message[] mRaid = repository.findByPrimaryKey(raid);
         printer.print(service, mRaid);
 
     }
-
-/*
-
-    варианты:
-    обрабатывать массив ключей в  логе
-    сделать метод собирающий масив сообщений по одному ключу
-*/
 
 
     /**
@@ -92,8 +87,8 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = messageRepository.create(messages);
-        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        UUID[] raid = repository.create(messages);
+        Message[] mRaid = repository.findByPrimaryKey(raid);
         printer.print(service, orderBy, mRaid);
     }
 
@@ -108,8 +103,8 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = messageRepository.create(messages);
-        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        UUID[] raid = repository.create(messages);
+        Message[] mRaid = repository.findByPrimaryKey(raid);
         printer.print(service, doubling, mRaid);
     }
 
@@ -124,10 +119,10 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = messageRepository.create(messages);
-        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
-       // printer.print(service, orderBy, doubling, mRaid); //для вывода по ключу
-        printer.print(service, orderBy, doubling, messageRepository.findAlltoArray()); //для вывода из коллекции
+        UUID[] raid = repository.create(messages);
+        Message[] mRaid = repository.findByPrimaryKey(raid);
+        // printer.print(service, orderBy, doubling, mRaid); //для вывода по ключу
+        printer.print(service, orderBy, doubling, repository.collectionToArray(repository.findAll())); //для вывода из коллекции
     }
 
     @Override
