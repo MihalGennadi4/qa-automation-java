@@ -15,6 +15,6 @@ public interface MessageRepository {
 
     Collection<Message> findAll();
 
-    Message[] findAllinArray();
+    Message[] findAlltoArray();
 
 }

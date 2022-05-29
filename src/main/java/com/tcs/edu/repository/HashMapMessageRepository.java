@@ -57,20 +57,23 @@ public class HashMapMessageRepository implements MessageRepository {
         return messagesRaid;
     }
 
-    /**
-     *
-     * @return
+    /**Возвращает все сообщения из мапы в виде коллекции
+     * @return коллекция сообщний
      */
     @Override
     public Collection<Message> findAll() {
         return messages.values();
     }
 
-    public Message[] findAllinArray(){
+    /** Возвращает все сообщения из мапы в виде массива
+     *
+     * @return массив сообщений
+     */
+    public Message[] findAlltoArray() {
         Collection<Message> test = findAll();
         Message[] output = new Message[test.size()];
-        int count =0;
-        for (Message counter: test) {
+        int count = 0;
+        for (Message counter : test) {
             output[count] = counter;
             count++;
         }
