@@ -5,6 +5,7 @@ import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.printer.ConsolePrinter;
 import com.tcs.edu.service.MessageService;
+import com.tcs.edu.repository.HashMapMessageRepository;
 
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
 import static com.tcs.edu.decorator.SeverityLevel.MINOR;
@@ -35,10 +36,12 @@ class Application {
         Message message5 = new Message(MINOR, "Five");
         Message message6 = new Message(MAJOR, "One");
         Message brokenMessage = null;
-        service.log(service, message1, brokenMessage);
-        service.log(service, message1, message2, message3, message4, message5, message6);
-        service.log(service, DESC, message1, message2, message3, message4, message5, message6);
+
+
+        //service.log(service, message1, message2, message3, message4, message5, message6);
+        //service.log(service, DESC, message1, message2, message3, message4, message5, message6);
         service.log(service, DESC, DISTINCT, message1, message2, message3, message4, message5, message6);
+
 
     }
 

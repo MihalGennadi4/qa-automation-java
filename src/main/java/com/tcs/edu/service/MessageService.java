@@ -5,6 +5,10 @@ import com.tcs.edu.decorator.Decorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.exeption.LogException;
 import com.tcs.edu.printer.Printer;
+import com.tcs.edu.repository.HashMapMessageRepository;
+import com.tcs.edu.repository.MessageRepository;
+
+import java.util.UUID;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
 import static com.tcs.edu.counter.Counter.showMessageCount;
@@ -13,9 +17,10 @@ import static com.tcs.edu.counter.Counter.showMessageCount;
  * Обработка сообщений
  */
 public class MessageService extends ValidatedService implements Service {
-    private Printer printer;
-    private Decorator decorateTime;
-    private Decorator decorateSeverity;
+    final private Printer printer;
+    final private Decorator decorateTime;
+    final private Decorator decorateSeverity;
+    private MessageRepository messageRepository = new HashMapMessageRepository();
 
     /**
      * @param printer   Способ печати
@@ -44,9 +49,9 @@ public class MessageService extends ValidatedService implements Service {
         messageCounter();
         String resault;
         if (showMessageCount() % Counter.PAGE_SIZE == 0) {
-            resault = String.format("%d %s %s \n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
+            resault = String.format("%d %s %s id = %s\n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message), message.getId());
         } else {
-            resault = String.format("%d %s %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
+            resault = String.format("%d %s %s id = %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message), message.getId());
         }
         return resault;
     }
@@ -62,9 +67,19 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        printer.print(service, messages);
+        UUID[] raid = messageRepository.create(messages);
+        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        printer.print(service, mRaid);
 
     }
+
+/*
+
+    варианты:
+    обрабатывать массив ключей в  логе
+    сделать метод собирающий масив сообщений по одному ключу
+*/
+
 
     /**
      * Метод API для вывода сообщений в консоль с сортировкой по порядку
@@ -77,8 +92,9 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        printer.print(service, orderBy, messages);
-
+        UUID[] raid = messageRepository.create(messages);
+        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        printer.print(service, orderBy, mRaid);
     }
 
     /**
@@ -92,8 +108,9 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        printer.print(service, doubling, messages);
-
+        UUID[] raid = messageRepository.create(messages);
+        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        printer.print(service, doubling, mRaid);
     }
 
     /**
@@ -107,8 +124,9 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        printer.print(service, orderBy, doubling, messages);
-
+        UUID[] raid = messageRepository.create(messages);
+        Message[] mRaid = messageRepository.findByPrimaryKey(raid);
+        printer.print(service, orderBy, doubling, mRaid);
     }
 
     @Override
