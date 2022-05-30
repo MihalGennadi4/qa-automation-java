@@ -69,9 +69,7 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = repository.create(messages);
-        Message[] mRaid = repository.findByPrimaryKey(raid);
-        printer.print(service, mRaid);
+        printer.print(service, messages);
 
     }
 
@@ -87,9 +85,7 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = repository.create(messages);
-        Message[] mRaid = repository.findByPrimaryKey(raid);
-        printer.print(service, orderBy, mRaid);
+        printer.print(service, orderBy, messages);
     }
 
     /**
@@ -103,9 +99,7 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = repository.create(messages);
-        Message[] mRaid = repository.findByPrimaryKey(raid);
-        printer.print(service, doubling, mRaid);
+        printer.print(service, doubling, messages);
     }
 
     /**
@@ -119,10 +113,7 @@ public class MessageService extends ValidatedService implements Service {
         } catch (IllegalArgumentException e) {
             throw new LogException("Что-то пошло не так", e);
         }
-        UUID[] raid = repository.create(messages);
-        Message[] mRaid = repository.findByPrimaryKey(raid);
-        // printer.print(service, orderBy, doubling, mRaid); //для вывода по ключу
-        printer.print(service, orderBy, doubling, repository.collectionToArray(repository.findAll())); //для вывода из коллекции
+        printer.print(service, orderBy, doubling, messages);
     }
 
     @Override
