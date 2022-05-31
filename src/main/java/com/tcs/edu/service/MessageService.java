@@ -3,7 +3,12 @@ package com.tcs.edu.service;
 import com.tcs.edu.counter.Counter;
 import com.tcs.edu.decorator.Decorator;
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.exeption.LogException;
 import com.tcs.edu.printer.Printer;
+import com.tcs.edu.repository.HashMapMessageRepository;
+import com.tcs.edu.repository.MessageRepository;
+
+import java.util.UUID;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
 import static com.tcs.edu.counter.Counter.showMessageCount;
@@ -12,19 +17,22 @@ import static com.tcs.edu.counter.Counter.showMessageCount;
  * Обработка сообщений
  */
 public class MessageService extends ValidatedService implements Service {
-    private Printer printer;
-    private Decorator decorateTime;
-    private Decorator decorateSeverity;
+    final private Printer printer;
+    final private Decorator decorateTime;
+    final private Decorator decorateSeverity;
+    final private MessageRepository repository;
 
     /**
-     * @param printer   Способ печати
-     * @param Severity  Декорация уровня сообщений
-     * @param Timestamp Декорация времени
+     * @param printer    Способ печати
+     * @param severity   Декорация уровня сообщений
+     * @param timestamp  Декорация времени
+     * @param repository Используемый репозиторий
      */
-    public MessageService(Printer printer, Decorator Severity, Decorator Timestamp) {
+    public MessageService(Printer printer, Decorator severity, Decorator timestamp, MessageRepository repository) {
         this.printer = printer;
-        this.decorateTime = Timestamp;
-        this.decorateSeverity = Severity;
+        this.decorateTime = timestamp;
+        this.decorateSeverity = severity;
+        this.repository = repository;
     }
 
 
@@ -43,9 +51,9 @@ public class MessageService extends ValidatedService implements Service {
         messageCounter();
         String resault;
         if (showMessageCount() % Counter.PAGE_SIZE == 0) {
-            resault = String.format("%d %s %s \n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
+            resault = String.format("%d %s %s id = %s\n---", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message), message.getId());
         } else {
-            resault = String.format("%d %s %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message));
+            resault = String.format("%d %s %s id = %s", showMessageCount(), decorateTime.addTimestamp(message), decorateSeverity.severityDecorate(message), message.getId());
         }
         return resault;
     }
@@ -56,20 +64,28 @@ public class MessageService extends ValidatedService implements Service {
      * @param messages варарг сообщений
      */
     public void log(MessageService service, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, messages);
+        try {
+            super.isArgsValid(messages);
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, messages);
+
     }
+
 
     /**
      * Метод API для вывода сообщений в консоль с сортировкой по порядку
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,MessageOrder orderBy, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, orderBy, messages);
+    public void log(MessageService service, MessageOrder orderBy, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, orderBy, messages);
     }
 
     /**
@@ -77,10 +93,13 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,Doubling doubling, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service, doubling, messages);
+    public void log(MessageService service, Doubling doubling, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, doubling, messages);
     }
 
     /**
@@ -88,10 +107,13 @@ public class MessageService extends ValidatedService implements Service {
      *
      * @param messages варарг сообщений
      */
-    public void log(MessageService service,MessageOrder orderBy, Doubling doubling, Message... messages) {
-        if (isArgsValid() == true) {
-            printer.print(service,orderBy, doubling, messages);
+    public void log(MessageService service, MessageOrder orderBy, Doubling doubling, Message... messages) {
+        try {
+            isArgsValid();
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Что-то пошло не так", e);
         }
+        printer.print(service, orderBy, doubling, messages);
     }
 
     @Override
