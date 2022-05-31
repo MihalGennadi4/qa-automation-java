@@ -44,10 +44,9 @@ class Application {
 
         UUID[] raid = repository.create(message1, message2, message3, message4, message5, message6);
         Message[] mRaid = repository.findByPrimaryKey(raid);
-        //service.log(service, message1, message2, message3, message4, message5, message6);
-        service.log(service, DESC, mRaid); // вывод по ключу
-        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findAll())); //вывод всего что есть в мапе
-        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findBySeverity(MAJOR))); //вывод по уровню собщений
+        service.log(service, DESC, mRaid);
+        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findAll()));
+        service.log(service, DESC, DISTINCT, repository.collectionToArray(repository.findBySeverity(MAJOR)));
 
 
     }
