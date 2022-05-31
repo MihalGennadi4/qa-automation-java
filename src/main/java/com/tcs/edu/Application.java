@@ -4,15 +4,13 @@ import com.tcs.edu.decorator.SeverityMessageDecorator;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.printer.ConsolePrinter;
-import com.tcs.edu.repository.MessageRepository;
-import com.tcs.edu.service.MessageService;
 import com.tcs.edu.repository.HashMapMessageRepository;
+import com.tcs.edu.service.MessageService;
 
 import java.util.UUID;
 
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
 import static com.tcs.edu.decorator.SeverityLevel.MINOR;
-import static com.tcs.edu.repository.HashMapMessageRepository.*;
 import static com.tcs.edu.service.Doubling.DISTINCT;
 import static com.tcs.edu.service.MessageOrder.DESC;
 
