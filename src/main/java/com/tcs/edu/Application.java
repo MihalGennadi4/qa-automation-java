@@ -33,7 +33,7 @@ class Application {
         MessageService service = new MessageService(new ConsolePrinter(), new SeverityMessageDecorator(), new TimestampMessageDecorator(), new HashMapMessageRepository());
         HashMapMessageRepository repository = new HashMapMessageRepository();
         Message message1 = new Message(MAJOR, "Вывод 1");
-        Message message2 = new Message(MAJOR, "Вывод 2");
+        Message message2 = new Message(MINOR, "Вывод 2");
         Message message3 = new Message(MAJOR, "Вывод 3");
         Message message4 = new Message(MINOR, "Вывод 3");
         Message message5 = new Message(MINOR, "Вывод 2");
