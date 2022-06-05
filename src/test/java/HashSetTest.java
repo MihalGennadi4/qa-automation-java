@@ -8,8 +8,7 @@ import java.util.UUID;
 
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
 import static com.tcs.edu.decorator.SeverityLevel.MINOR;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HashSetTest {
     MessageRepository repository = new HashMapMessageRepository();
@@ -26,9 +25,13 @@ public class HashSetTest {
     public void shouldSaveElementWhenDoesntExists() {
         UUID[] id = repository.create(message1);
         Message[] toInspect = repository.findByPrimaryKey(id);
-        assertEquals(message1.getBody(), toInspect[0].getBody());
-        assertEquals(message1.getLevel(), toInspect[0].getLevel());
-        assertEquals(toInspect[0].getId(), message1.getId());
+        assertAll(
+                () -> assertEquals(message1.getBody(), toInspect[0].getBody()),
+                () -> assertEquals(message1.getLevel(), toInspect[0].getLevel()),
+                () -> assertEquals(toInspect[0].getId(), message1.getId())
+        );
+
+
     }
 
     @Test
@@ -43,8 +46,12 @@ public class HashSetTest {
     public void shouldSaveElementsWhenDoesntExists() {
         UUID[] id = repository.create(message1, message2, message3, message4, message5, message6);
         Collection<Message> toInspect = repository.findAll();
-        assertEquals(6, toInspect.size()); /// TODO: 05.06.2022 сделать массив сообщений и брать expected из .lenght
-        assertTrue(toInspect.contains(message3));
+        assertAll(
+                () -> assertEquals(6, toInspect.size()), /// TODO: 05.06.2022 сделать массив сообщений и брать expected из .lenght
+                () -> assertTrue(toInspect.contains(message3))
+        );
+
+
     }
 
     @Test
