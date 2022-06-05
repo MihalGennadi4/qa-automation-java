@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import static com.tcs.edu.decorator.SeverityLevel.MAJOR;
 import static com.tcs.edu.decorator.SeverityLevel.MINOR;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HashSetTest {
@@ -63,6 +66,7 @@ public class HashSetTest {
             assertEquals(MAJOR, toInspect[counter].getLevel());
             counter++;
         }
+        assertThat(toInspect, is(contains(message1)));
     }
 
 }
