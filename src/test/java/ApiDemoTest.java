@@ -71,9 +71,13 @@ public class ApiDemoTest {
     @DisplayName("Удаление тестовой записи")
     @AfterEach
     public void deleteTestData() throws SQLException {
+        String QUERY = "DELETE FROM country WHERE id =" + idInCountryTable;
         PreparedStatement sql = connection.prepareStatement(
-                "DELETE from country (id) VALUES(?)");
+                QUERY);
+/*      PreparedStatement sql = connection.prepareStatement(
+                "DELETE country(id) VALUES(?)"
         sql.setInt(1, idInCountryTable);
+        );*/ // TODO: 20.06.2022 Обсудить и пофиксить 
         sql.executeUpdate();
 
     }
