@@ -27,7 +27,9 @@ public class Message {
         return body;
     }
 
-    public UUID getId() {return id;}
+    public UUID getId() {
+        return id;
+    }
 
     public void setLevel(SeverityLevel level) {
         this.level = level;
@@ -37,7 +39,9 @@ public class Message {
         this.body = body;
     }
 
-    public void setId(UUID id) {this.id = id;}
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
@@ -58,6 +62,6 @@ public class Message {
 
     @Override
     public int hashCode() {
-        return Objects.hash(level, body,id);
+        return Objects.hash(level, body, id);
     }
 }

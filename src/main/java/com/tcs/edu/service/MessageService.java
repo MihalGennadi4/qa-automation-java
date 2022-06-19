@@ -5,10 +5,7 @@ import com.tcs.edu.decorator.Decorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.exeption.LogException;
 import com.tcs.edu.printer.Printer;
-import com.tcs.edu.repository.HashMapMessageRepository;
 import com.tcs.edu.repository.MessageRepository;
-
-import java.util.UUID;
 
 import static com.tcs.edu.counter.Counter.messageCounter;
 import static com.tcs.edu.counter.Counter.showMessageCount;

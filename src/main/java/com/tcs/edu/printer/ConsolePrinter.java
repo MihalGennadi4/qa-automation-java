@@ -1,7 +1,5 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.decorator.SeverityMessageDecorator;
-import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.service.*;
 
