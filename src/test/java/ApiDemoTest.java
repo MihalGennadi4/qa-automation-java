@@ -1,15 +1,24 @@
 import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+
+import java.sql.*;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
 public class ApiDemoTest {
+
+
+    private static Connection connection;
+    private int id;
+    private String preparedCountry;
+    private String changedCountry;
+
 
     @DisplayName("Генерация рандомной страны")
     public static String generateNewString() {
@@ -18,27 +27,6 @@ public class ApiDemoTest {
         return newCountry;
     }
 
-/*
-    @DisplayName("Получения ID новой страны")
-    public static JsonPath createNewCountryAndGetId() {
-        return given()
-                .body("{\n" +
-                        "  \"countryName\": \"" + ApiDemoTest.generateNewString() + "\"\n" +
-                        "}")
-                .when()
-                .post("/")
-                .then()
-                .extract()
-                .jsonPath();
-    }
-
-
-     public static String convertJsonToString(String string) {
-        JsonPath json = createNewCountryAndGetId();
-        String toReturn = json.get(string);
-        return toReturn;
-
-    }*/
 
     @DisplayName("Авторизация")
     @BeforeAll
@@ -49,22 +37,56 @@ public class ApiDemoTest {
         RestAssured.authentication = authScheme;
     }
 
+    @DisplayName("Создаем коннект к БД")
+    @BeforeAll
+    public static void connect() throws SQLException {
+        connection = DriverManager.getConnection(
+                "jdbc:postgresql://localhost/app-db",
+                "app-db-admin",
+                "P@ssw0rd"
+        );
+    }
+
     @DisplayName("Включаем логи")
     @BeforeAll
     public static void setUpErrorLogging() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
+    @DisplayName("Создание записи в Country")
+    @BeforeEach
+    public void createDataInCountry()throws SQLException {
+        PreparedStatement sql = connection.prepareStatement(
+                "INSERT INTO country(country_name) VALUES(?)",
+                Statement.RETURN_GENERATED_KEYS
+        );
+        sql.setString(1, UUID.randomUUID().toString().substring(0,2));
+        sql.executeUpdate();
+        ResultSet keys = sql.getGeneratedKeys();
+        keys.next();
+        id = keys.getInt(1);
+        preparedCountry = keys.getString(2);
+    }
+
+    @DisplayName("Удаление тестовой записи")
+    @AfterEach
+    public void deleteTestData(){
+
+    }
+
+
+
     @DisplayName("Поиск одной существующей записи")
     @Test
-    public void shouldGetLocationsWhenPopulatedDb() {
+    public void shouldGetLocationsWhenPopulatedDb() throws SQLException {
+        createDataInCountry();
         when()
-                .get("/api/countries/5")
+                .get("/api/countries/{id}",id)
                 .then()
                 .statusCode(200)
                 .body(
-                        "id", is(5),
-                        "countryName", is("Ac"),
+                        "id", is(id),
+                        "countryName", is(preparedCountry),
                         "locations", not(empty())
                 );
     }
@@ -85,7 +107,7 @@ public class ApiDemoTest {
     }
 
     @DisplayName("Создание новой записи")
-    @Test
+    @Test @Disabled
     public void shouldCreateCountryWhenUnique() {
         given()
                 .contentType("application/json")
@@ -105,7 +127,7 @@ public class ApiDemoTest {
         given()
                 .contentType("application/json")
                 .body("{\n" +
-                        "  \"countryName\": \"" + ApiDemoTest.generateNewString() + "\"\n" +
+                        "  \"countryName\": \"" + preparedCountry + "\"\n" +
                         "}")
                 .when()
                 .post("/api/countries")
@@ -117,8 +139,6 @@ public class ApiDemoTest {
     @DisplayName("Удаление известной страны")
     @Test
     public void shouldDeleteCountryWhenCountryAlreadyExist() {
-        //    String id = convertJsonToString("id");
-        int id =  (int) Math.round(Math.random() * 10 + 1);
         when()
                 .delete("/api/countries/{id}", id)
                 .then()
@@ -131,44 +151,36 @@ public class ApiDemoTest {
     @DisplayName("Обновление CountryName через put")
     @Test
     public void shouldPutCountryNameWhenCountryAlreadyExist() {
-        int id = (int) Math.round(Math.random() * 10 + 1);
+        changedCountry = ApiDemoTest.generateNewString();
         given()
                 .contentType("application/json")
                 .body("{\n" +
-                        "  \"countryName\": \"" + ApiDemoTest.generateNewString() + "\"\n" +
+                        "  \"id\": \"" + id + "\" , \n" +
+                        "  \"countryName\": \"" + changedCountry + "\"\n" +
                         "}")
                 .when()
-                .put("/api/countries/1")
+                .put("/api/countries/{id}", id)
                 .then()
                 .statusCode(200)
-                .body("countryName", not(empty()));
+                .body("countryName", is(changedCountry));
     }
 
     @DisplayName("Обновление CountryName через path")
     @Test
     public void shouldPathCountryWhenCountryAlreadyExist() {
-        int id = (int) Math.round(Math.random() * 10 + 1);
+
         given()
                 .contentType("application/json")
                 .body("{\n" +
+                        "  \"id\": \"" + id + "\" , \n" +
                         "  \"countryName\": \"" + ApiDemoTest.generateNewString() + "\"\n" +
                         "}")
                 .when()
-                .patch("/api/countries/1")
+                .patch("/api/countries/{id}", id)
                 .then()
                 .statusCode(200)
                 .body("countryName", not(empty()));
     }
-/*
-    @DisplayName("Счетчик считает")
-    @Test
-    public void shouldCounterWhenCountryArrayNotNull() {
-        when()
-                .get("/api/countries/count")
-                .then()
-                .statusCode(200)
-                .body(is("10"));
-    }
-*/
+
 
 }
