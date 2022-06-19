@@ -3,8 +3,9 @@ import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 
-
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
@@ -20,11 +21,24 @@ public class ApiDemoTest {
     private String changedCountry;
 
 
+
+
     @DisplayName("Генерация рандомной страны")
     public static String generateNewString() {
         String newCountry = RandomStringUtils.randomAlphanumeric(2);
         System.out.println(newCountry);
         return newCountry;
+    }
+
+    @DisplayName("Получаем список стран из БД")
+    public Collection shouldGetExistCountriesWhenPopulatedDb() throws SQLException {
+        Collection<String> countryNames = new ArrayList<>();
+        Statement sql = connection.createStatement();
+        ResultSet resultSet = sql.executeQuery("SELECT * FROM country");
+        while (resultSet.next()) {
+            countryNames.add(resultSet.getString(2));
+        }
+        return countryNames;
     }
 
 
@@ -100,15 +114,21 @@ public class ApiDemoTest {
 
     @DisplayName("Поиск всех существующих записей")
     @Test
-    public void shouldGetAllLocationsWhenPopulatedDb() {
+    public void shouldGetAllLocationsWhenPopulatedDb() throws SQLException {
+        Collection <String> countryNames = shouldGetExistCountriesWhenPopulatedDb();
+        int id = (int) Math.round(Math.random() * countryNames.size() + 1);
+        String assertCountryName = "["+id+"].countryName";
+        String assertId = "["+id+"].id";
+        String assertLocation ="["+id+"].locations";
+        //String df = countryNames.stream().findFirst().toString(); todo доработать проверку по рандомному значению
         when()
                 .get("/api/countries")
                 .then()
                 .statusCode(200)
                 .body(
-                        "[5].countryName", is("Fr"),
-                        "[5].id", is(8),
-                        "[5].locations", not(empty())
+                        assertCountryName,not(empty()),// contains(df),
+                        assertId, not(empty()), //contains(idInCountryTable),
+                        assertLocation, not(empty())
 
                 );
     }
