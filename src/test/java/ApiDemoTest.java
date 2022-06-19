@@ -15,7 +15,7 @@ public class ApiDemoTest {
 
 
     private static Connection connection;
-    private int id;
+    private int idInCountryTable;
     private String preparedCountry;
     private String changedCountry;
 
@@ -55,25 +55,28 @@ public class ApiDemoTest {
 
     @DisplayName("Создание записи в Country")
     @BeforeEach
-    public void createDataInCountry()throws SQLException {
+    public void createDataInCountry() throws SQLException {
         PreparedStatement sql = connection.prepareStatement(
                 "INSERT INTO country(country_name) VALUES(?)",
                 Statement.RETURN_GENERATED_KEYS
         );
-        sql.setString(1, UUID.randomUUID().toString().substring(0,2));
+        sql.setString(1, UUID.randomUUID().toString().substring(0, 2));
         sql.executeUpdate();
         ResultSet keys = sql.getGeneratedKeys();
         keys.next();
-        id = keys.getInt(1);
+        idInCountryTable = keys.getInt(1);
         preparedCountry = keys.getString(2);
     }
 
     @DisplayName("Удаление тестовой записи")
     @AfterEach
-    public void deleteTestData(){
+    public void deleteTestData() throws SQLException {
+        PreparedStatement sql = connection.prepareStatement(
+                "DELETE from country (id) VALUES(?)");
+        sql.setInt(1, idInCountryTable);
+        sql.executeUpdate();
 
     }
-
 
 
     @DisplayName("Поиск одной существующей записи")
@@ -81,11 +84,11 @@ public class ApiDemoTest {
     public void shouldGetLocationsWhenPopulatedDb() throws SQLException {
         createDataInCountry();
         when()
-                .get("/api/countries/{id}",id)
+                .get("/api/countries/{id}", idInCountryTable)
                 .then()
                 .statusCode(200)
                 .body(
-                        "id", is(id),
+                        "id", is(idInCountryTable),
                         "countryName", is(preparedCountry),
                         "locations", not(empty())
                 );
@@ -107,7 +110,8 @@ public class ApiDemoTest {
     }
 
     @DisplayName("Создание новой записи")
-    @Test @Disabled
+    @Test
+    @Disabled
     public void shouldCreateCountryWhenUnique() {
         given()
                 .contentType("application/json")
@@ -140,7 +144,7 @@ public class ApiDemoTest {
     @Test
     public void shouldDeleteCountryWhenCountryAlreadyExist() {
         when()
-                .delete("/api/countries/{id}", id)
+                .delete("/api/countries/{id}", idInCountryTable)
                 .then()
                 .statusCode(204)
                 .header("x-appapp-params", not(empty()));
@@ -155,11 +159,11 @@ public class ApiDemoTest {
         given()
                 .contentType("application/json")
                 .body("{\n" +
-                        "  \"id\": \"" + id + "\" , \n" +
+                        "  \"id\": \"" + idInCountryTable + "\" , \n" +
                         "  \"countryName\": \"" + changedCountry + "\"\n" +
                         "}")
                 .when()
-                .put("/api/countries/{id}", id)
+                .put("/api/countries/{id}", idInCountryTable)
                 .then()
                 .statusCode(200)
                 .body("countryName", is(changedCountry));
@@ -172,11 +176,11 @@ public class ApiDemoTest {
         given()
                 .contentType("application/json")
                 .body("{\n" +
-                        "  \"id\": \"" + id + "\" , \n" +
+                        "  \"id\": \"" + idInCountryTable + "\" , \n" +
                         "  \"countryName\": \"" + ApiDemoTest.generateNewString() + "\"\n" +
                         "}")
                 .when()
-                .patch("/api/countries/{id}", id)
+                .patch("/api/countries/{id}", idInCountryTable)
                 .then()
                 .statusCode(200)
                 .body("countryName", not(empty()));
