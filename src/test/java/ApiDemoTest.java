@@ -85,13 +85,9 @@ public class ApiDemoTest {
     @DisplayName("Удаление тестовой записи")
     @AfterEach
     public void deleteTestData() throws SQLException {
-        String QUERY = "DELETE FROM country WHERE id =" + idInCountryTable;
-        PreparedStatement sql = connection.prepareStatement(
-                QUERY);
-/*      PreparedStatement sql = connection.prepareStatement(
-                "DELETE country(id) VALUES(?)"
-        sql.setInt(1, idInCountryTable);
-        );*/ // TODO: 20.06.2022 Обсудить и пофиксить 
+      PreparedStatement sql = connection.prepareStatement(
+      "DELETE FROM country WHERE id = " + idInCountryTable + ";");
+
         sql.executeUpdate();
 
     }
@@ -120,14 +116,13 @@ public class ApiDemoTest {
         String assertCountryName = "["+id+"].countryName";
         String assertId = "["+id+"].id";
         String assertLocation ="["+id+"].locations";
-        //String df = countryNames.stream().findFirst().toString(); todo доработать проверку по рандомному значению
         when()
                 .get("/api/countries")
                 .then()
                 .statusCode(200)
                 .body(
-                        assertCountryName,not(empty()),// contains(df),
-                        assertId, not(empty()), //contains(idInCountryTable),
+                        assertCountryName, not(empty()),
+                        assertId, not(empty()),
                         assertLocation, not(empty())
 
                 );
